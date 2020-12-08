@@ -13,12 +13,12 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Ground
+  - Bullet
+  - Lava
+  - Spike
+  - Enemy
   - 
   - 
   - 

@@ -6,42 +6,42 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Movement")]
-    [SerializeField] float movSpeed;                //The movement speed when grounded
-    [SerializeField] float movAccel;                //The maximum change in velocity the player can do on the ground. This determines how responsive the character will be when on the ground.
-
     [Header("Jump")]
-    [SerializeField] KeyCode jumpButton;
-    [SerializeField] float initialJumpForce;        //The force applied to the player when starting to jump
+    [SerializeField] float _maxJumpPower = 7.0f;
+    [SerializeField] float _maxJumpSwipeRadius = 1.0f;
 
     [Header("Misc")]
-    [SerializeField] float gravityMultiplier = 2.7f;
-    [SerializeField] Collider2D playerSpriteCollider;
+    [SerializeField] float _gravityMultiplier = 2.7f;
+    [SerializeField] Collider2D _playerSpriteCollider;
+    [SerializeField] GameObject _trajectoryPointPrefab;
+    [SerializeField] int _numberOfTrajectoryPoints = 10;
 
-    //Rigidbody cache
-    private Rigidbody2D rigidbody;
-    private bool isGrounded;
+    private Rigidbody2D _rb;
+    private bool _isGrounded;
 
-    private Vector2 originalTouchPos;
-    private bool isJump;
-    private bool isTouching;
+    private Vector2 _previousPlayerPos;
+    private bool _isJump;
+    private bool _startedTouchOnPlayer;
+
+    private GameObject[] _trajectoryPoints;
 
     void Start()
     {
-        //Setup our rigidbody cache variable
-        rigidbody = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody2D>();
+
+        // Setup trajectory points
+        _trajectoryPoints = new GameObject[_numberOfTrajectoryPoints];
+        for (int i = 0; i < _numberOfTrajectoryPoints; i++)
+        {
+            _trajectoryPoints[i] = Instantiate(_trajectoryPointPrefab);
+            _trajectoryPoints[i].SetActive(false);
+        }
     }
 
     void Update()
     {
         // Increase the speed of the player falling so he doesn't look floaty
-        rigidbody.AddForce(gravityMultiplier * Physics2D.gravity * rigidbody.mass, ForceMode2D.Force);
-
-        Move(new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")));
-        if (Input.GetKeyDown(jumpButton))
-        {
-            Jump();
-        }
+        //_rb.AddForce(_gravityMultiplier * Physics2D.gravity * _rb.mass, ForceMode2D.Force);
 
         if (Input.touchCount > 0)
         {
@@ -51,31 +51,38 @@ public class PlayerController : MonoBehaviour
             Vector2 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
             Debug.DrawLine(transform.position, touchPos);
 
+            CheckIfSwipeIsJump(touchPos);
+
+            Vector2 direction = touchPos - (Vector2) transform.position;
+            direction = direction.normalized;
+            Debug.Log(direction);
+
+            // Calculate the force of jump depending of how far from the player the person drags his finger
+            float dragDistance = Vector2.Distance((Vector2)transform.position, touchPos);
+            float powerPercentage = Mathf.Clamp01(dragDistance / _maxJumpSwipeRadius);
+            float currentJumpPower = powerPercentage * _maxJumpPower;
+
             switch (touchPhase)
             {
                 case TouchPhase.Began:
-                    originalTouchPos = touchPos;
+                    _startedTouchOnPlayer = _playerSpriteCollider.OverlapPoint(touchPos);
                     break;
                 case TouchPhase.Stationary:
-                    if (!isJump)
-                    {
-                        isJump = IsJumpSwipe(touchPos);
-                    }
-
+                    // Nothing
                     break;
                 case TouchPhase.Moved:
-                    if (!isJump)
-                    {
-                        isJump = IsJumpSwipe(touchPos);
-                    }
-
                     // Update trajectory
+                    if (_isJump)
+                    {
+                        UpdateTrajectory(direction, currentJumpPower);
+                    }
 
                     break;
                 case TouchPhase.Ended:
-                    if (isJump)
+                    if (_isJump)
                     {
                         Debug.Log("It's a jump!");
+                        Jump(direction, currentJumpPower);
                     }
                     else
                     {
@@ -86,43 +93,58 @@ public class PlayerController : MonoBehaviour
                     break;
             }
         }
+
+        _previousPlayerPos = transform.position;
+    }
+
+    private void UpdateTrajectory(Vector2 direction, float jumpPower)
+    {
+        for (int i = 0; i < _trajectoryPoints.Length; i++)
+        {
+            _trajectoryPoints[i].transform.position =  CalculatePointPosition(i * 0.1f, direction, jumpPower);
+        }
+    }
+
+    private void SetTrajectoryPointsActiveState(bool state)
+    {
+        foreach (GameObject point in _trajectoryPoints)
+        {
+            point.SetActive(state);
+        }
     }
 
     private void ResetTouchVars()
     {
-        isJump = false;
+        _isJump = false;
+        _startedTouchOnPlayer = false;
+        SetTrajectoryPointsActiveState(false);
     }
 
-    private bool IsJumpSwipe(Vector2 currentTouchPos)
+    /// <summary>
+    /// Check if the swipe is eligible to be a jump swipe and if it is
+    /// then activate the trajectory
+    /// </summary>
+    /// <param name="currentTouchPos"></param>
+    private void CheckIfSwipeIsJump(Vector2 currentTouchPos)
     {
-        return (playerSpriteCollider.OverlapPoint(originalTouchPos) && !playerSpriteCollider.OverlapPoint(currentTouchPos));
+        if (!_isJump)
+        {
+            _isJump = (_startedTouchOnPlayer && !_playerSpriteCollider.OverlapPoint(currentTouchPos));
+
+            if (_isJump)
+            {
+                SetTrajectoryPointsActiveState(true);
+            }
+        }
     }
 
-    private void Move(Vector2 _dir)
+    private void Jump(Vector2 direction, float jumpPower)
     {
-        Vector2 velocity = rigidbody.velocity;
-
-        //The velocity we want our character to have. We get the movement direction, the ground direction and the speed we want (ground speed or air speed)
-        Vector2 targetVelocity = _dir * movSpeed;
-
-        //The change in velocity we need to perform to achieve our target velocity
-        Vector2 velocityDelta = targetVelocity - velocity;
-
-        //The maximum change in velocity we can do
-        float maxDelta = movAccel;
-
-        //Clamp the velocity delta to our maximum velocity change
-        velocityDelta.x = Mathf.Clamp(velocityDelta.x, -maxDelta, maxDelta);
-
-        //We don't want to move the character vertically
-        velocityDelta.y = 0;
-
-        //Apply the velocity change to the character
-        rigidbody.AddForce(velocityDelta * rigidbody.mass, ForceMode2D.Impulse);
+        _rb.AddForce(direction * jumpPower, ForceMode2D.Impulse);
     }
 
-    void Jump()
+    private Vector2 CalculatePointPosition(float t, Vector2 direction, float jumpPower)
     {
-        rigidbody.AddForce(Vector3.up * initialJumpForce * rigidbody.mass, ForceMode2D.Impulse);
+        return ((Vector2) transform.position) + (direction * jumpPower * t) + 0.5f * ((Vector2) Physics.gravity) * (t * t);
     }
 }

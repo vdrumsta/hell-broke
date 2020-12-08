@@ -68,10 +68,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxJumpPower: 7
   _maxJumpSwipeRadius: 2
-  _gravityMultiplier: 2.7
-  _playerSpriteCollider: {fileID: 8062448053560881251}
+  _groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  _groundedCheckHeight: 0.05
   _trajectoryPointPrefab: {fileID: 3601170566540002804, guid: 1eea9506de59fd6429efcc448fff16ca, type: 3}
   _numberOfTrajectoryPoints: 10
+  _numberOfTrajectoryFadePoints: 4
+  _playerSpriteCollider: {fileID: 8062448053560881251}
 --- !u!1 &8062448053560881248
 GameObject:
   m_ObjectHideFlags: 0
@@ -83,7 +87,6 @@ GameObject:
   - component: {fileID: 8062448053560881250}
   - component: {fileID: 8062448053560881249}
   - component: {fileID: 8062448053560881251}
-  - component: {fileID: 8062448053560881276}
   m_Layer: 8
   m_Name: PlayerSprite
   m_TagString: Untagged
@@ -181,30 +184,4 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 0.78, y: 0.74}
-  m_EdgeRadius: 0
---- !u!61 &8062448053560881276
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8062448053560881248}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.33}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.78, y: 0.74}
-    newSize: {x: 0.78, y: 0.74}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.78, y: 0.14}
   m_EdgeRadius: 0

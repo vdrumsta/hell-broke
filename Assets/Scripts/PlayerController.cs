@@ -9,12 +9,16 @@ public class PlayerController : MonoBehaviour
     [Header("Jump")]
     [SerializeField] float _maxJumpPower = 7.0f;
     [SerializeField] float _maxJumpSwipeRadius = 1.0f;
+    [SerializeField] LayerMask _groundLayerMask;
+    [SerializeField] float _groundedCheckHeight = 1f;
 
-    [Header("Misc")]
-    [SerializeField] float _gravityMultiplier = 2.7f;
-    [SerializeField] Collider2D _playerSpriteCollider;
+    [Header("Trajectory")]
     [SerializeField] GameObject _trajectoryPointPrefab;
     [SerializeField] int _numberOfTrajectoryPoints = 10;
+    [SerializeField] int _numberOfTrajectoryFadePoints = 3;
+
+    [Header("Misc")]
+    [SerializeField] Collider2D _playerSpriteCollider;
 
     private Rigidbody2D _rb;
     private bool _isGrounded;
@@ -31,17 +35,13 @@ public class PlayerController : MonoBehaviour
 
         // Setup trajectory points
         _trajectoryPoints = new GameObject[_numberOfTrajectoryPoints];
-        for (int i = 0; i < _numberOfTrajectoryPoints; i++)
-        {
-            _trajectoryPoints[i] = Instantiate(_trajectoryPointPrefab);
-            _trajectoryPoints[i].SetActive(false);
-        }
+
+        CreateTrajectoryPoints();
     }
 
     void Update()
     {
-        // Increase the speed of the player falling so he doesn't look floaty
-        //_rb.AddForce(_gravityMultiplier * Physics2D.gravity * _rb.mass, ForceMode2D.Force);
+        _isGrounded = IsPlayerGrounded();
 
         if (Input.touchCount > 0)
         {
@@ -55,7 +55,6 @@ public class PlayerController : MonoBehaviour
 
             Vector2 direction = touchPos - (Vector2) transform.position;
             direction = direction.normalized;
-            Debug.Log(direction);
 
             // Calculate the force of jump depending of how far from the player the person drags his finger
             float dragDistance = Vector2.Distance((Vector2)transform.position, touchPos);
@@ -68,7 +67,11 @@ public class PlayerController : MonoBehaviour
                     _startedTouchOnPlayer = _playerSpriteCollider.OverlapPoint(touchPos);
                     break;
                 case TouchPhase.Stationary:
-                    // Nothing
+                    // Update trajectory
+                    if (_isJump)
+                    {
+                        UpdateTrajectory(direction, currentJumpPower);
+                    }
                     break;
                 case TouchPhase.Moved:
                     // Update trajectory
@@ -95,6 +98,29 @@ public class PlayerController : MonoBehaviour
         }
 
         _previousPlayerPos = transform.position;
+    }
+
+    private bool IsPlayerGrounded()
+    {
+        RaycastHit2D raycastHit = Physics2D.BoxCast(_playerSpriteCollider.bounds.center, _playerSpriteCollider.bounds.size, 0f, Vector2.down, _groundedCheckHeight, _groundLayerMask);
+
+        Color boxColor;
+
+        if (raycastHit.collider != null)
+        {
+            boxColor = Color.green;
+        }
+        else
+        {
+            boxColor = Color.red;
+        }
+
+        // Draw a box underneath the player. Don't need the top line of the box
+        Debug.DrawRay(_playerSpriteCollider.bounds.center + new Vector3(_playerSpriteCollider.bounds.extents.x, 0), Vector2.down * (_playerSpriteCollider.bounds.extents.y + _groundedCheckHeight), boxColor);
+        Debug.DrawRay(_playerSpriteCollider.bounds.center - new Vector3(_playerSpriteCollider.bounds.extents.x, 0), Vector2.down * (_playerSpriteCollider.bounds.extents.y + _groundedCheckHeight), boxColor);
+        Debug.DrawRay(_playerSpriteCollider.bounds.center - new Vector3(_playerSpriteCollider.bounds.extents.x, _playerSpriteCollider.bounds.extents.y + _groundedCheckHeight), Vector2.right * _playerSpriteCollider.bounds.size.x, boxColor);
+
+        return raycastHit.collider != null;
     }
 
     private void UpdateTrajectory(Vector2 direction, float jumpPower)
@@ -127,7 +153,7 @@ public class PlayerController : MonoBehaviour
     /// <param name="currentTouchPos"></param>
     private void CheckIfSwipeIsJump(Vector2 currentTouchPos)
     {
-        if (!_isJump)
+        if (!_isJump && _isGrounded)
         {
             _isJump = (_startedTouchOnPlayer && !_playerSpriteCollider.OverlapPoint(currentTouchPos));
 
@@ -146,5 +172,27 @@ public class PlayerController : MonoBehaviour
     private Vector2 CalculatePointPosition(float t, Vector2 direction, float jumpPower)
     {
         return ((Vector2) transform.position) + (direction * jumpPower * t) + 0.5f * ((Vector2) Physics.gravity) * (t * t);
+    }
+
+    private void CreateTrajectoryPoints()
+    {
+        for (int i = 0; i < _trajectoryPoints.Length; i++)
+        {
+            _trajectoryPoints[i] = Instantiate(_trajectoryPointPrefab);
+            _trajectoryPoints[i].SetActive(false);
+
+            // Make the last few points fade off
+            int fadePointsRemaining = _trajectoryPoints.Length - i;
+            if (fadePointsRemaining <= _numberOfTrajectoryFadePoints)
+            {
+                // Calculate what the fade value will be
+                float fadeAlphaValue = 1f / (_numberOfTrajectoryFadePoints + 1) * fadePointsRemaining;
+                var trajectoryPointRenderer = _trajectoryPoints[i].GetComponent<SpriteRenderer>();
+                var newColor = trajectoryPointRenderer.color;
+                newColor.a = fadeAlphaValue;
+                trajectoryPointRenderer.color = newColor;
+            }
+
+        }
     }
 }

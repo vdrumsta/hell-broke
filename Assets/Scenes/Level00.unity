@@ -1681,37 +1681,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &1656523625 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8062448052919946687, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
-  m_PrefabInstance: {fileID: 8062448053631019628}
-  m_PrefabAsset: {fileID: 0}
---- !u!61 &1656523629
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1656523625}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.025}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.96875, y: 1.09375}
-    newSize: {x: 0.78, y: 0.74}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.86, y: 0.94}
-  m_EdgeRadius: 0
 --- !u!1001 &1733544946
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2209,7 +2178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36edaaacba436344d8e888171912b276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isRising: 1
+  isRising: 0
   _riseSpeed: 1
   _lavaLayerMask:
     serializedVersion: 2
@@ -2356,14 +2325,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8062448052919946682, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
-      propertyPath: _lavaLayerMask.m_Bits
-      value: 2048
-      objectReference: {fileID: 0}
-    - target: {fileID: 8062448052919946682, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
-      propertyPath: _playerSpriteCollider
-      value: 
-      objectReference: {fileID: 1656523629}
     - target: {fileID: 8062448052919946687, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
       propertyPath: m_Name
       value: Player

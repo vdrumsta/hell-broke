@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _maxJumpSwipeRadius = 1.0f;
     [SerializeField] LayerMask _groundLayerMask;
     [SerializeField] float _groundedCheckHeight = 1f;
+    [SerializeField] float _dragDistanceForSwipe = 25f;
 
     [Header("Trajectory")]
     [SerializeField] GameObject _trajectoryPointPrefab;
@@ -22,16 +23,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Collider2D _playerSpriteCollider;
 
     [Header("Lava")]
-    [SerializeField] private LayerMask _lavaLayerMask;
+    [SerializeField] LayerMask _lavaLayerMask;
 
     private Rigidbody2D _rb;
     private bool _isGrounded;
 
+    private Vector2 _originalTouchScreenPos;
     private Vector2 _previousPlayerPos;
     private bool _isJump;
     private bool _startedTouchOnPlayer;
 
-    private GameObject[] _trajectoryPoints;
+    [SerializeField] private GameObject[] _trajectoryPoints;
 
     void Start()
     {
@@ -52,16 +54,21 @@ public class PlayerController : MonoBehaviour
             Touch touch = Input.GetTouch(0);
             TouchPhase touchPhase = touch.phase;
 
+            if (touchPhase == TouchPhase.Began)
+            {
+                _originalTouchScreenPos = touch.position;
+            }
+
             Vector2 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
             Debug.DrawLine(transform.position, touchPos);
 
-            CheckIfSwipeIsJump(touchPos);
+            CheckIfSwipeIsJump(touch);
 
-            Vector2 direction = touchPos - (Vector2) transform.position;
+            Vector2 direction = touch.position - _originalTouchScreenPos;
             direction = direction.normalized;
 
             // Calculate the force of jump depending of how far from the player the person drags his finger
-            float dragDistance = Vector2.Distance((Vector2)transform.position, touchPos);
+            float dragDistance = Vector2.Distance(transform.position, touchPos);
             float powerPercentage = Mathf.Clamp01(dragDistance / _maxJumpSwipeRadius);
             float currentJumpPower = powerPercentage * _maxJumpPower;
 
@@ -129,6 +136,8 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateTrajectory(Vector2 direction, float jumpPower)
     {
+        SetTrajectoryPointsActiveState(true);
+
         for (int i = 0; i < _trajectoryPoints.Length; i++)
         {
             _trajectoryPoints[i].transform.position =  CalculatePointPosition(i * 0.1f, direction, jumpPower);
@@ -155,15 +164,15 @@ public class PlayerController : MonoBehaviour
     /// then activate the trajectory
     /// </summary>
     /// <param name="currentTouchPos"></param>
-    private void CheckIfSwipeIsJump(Vector2 currentTouchPos)
+    private void CheckIfSwipeIsJump(Touch currentTouch)
     {
-        if (!_isJump && _isGrounded)
+        if (!_isJump && _isGrounded && currentTouch.phase != TouchPhase.Began)
         {
-            _isJump = (_startedTouchOnPlayer && !_playerSpriteCollider.OverlapPoint(currentTouchPos));
-
-            if (_isJump)
+            float fingerMoveDistance = Vector2.Distance(currentTouch.position, _originalTouchScreenPos);
+            
+            if (fingerMoveDistance > _dragDistanceForSwipe)
             {
-                SetTrajectoryPointsActiveState(true);
+                _isJump = true;
             }
         }
     }

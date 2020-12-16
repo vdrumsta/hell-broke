@@ -18,7 +18,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] int _numberOfTrajectoryFadePoints = 3;
 
     [Header("Misc")]
+    public bool isDead;
     [SerializeField] Collider2D _playerSpriteCollider;
+
+    [Header("Lava")]
+    [SerializeField] private LayerMask _lavaLayerMask;
 
     private Rigidbody2D _rb;
     private bool _isGrounded;

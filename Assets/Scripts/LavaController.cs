@@ -1,0 +1,36 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class LavaController : MonoBehaviour
+{
+    public bool isRising;
+
+    [SerializeField] private float _riseSpeed;
+    [SerializeField] private LayerMask _lavaLayerMask;
+
+    void Start()
+    {
+        
+    }
+
+
+    void Update()
+    {
+        if (isRising)
+        {
+            Vector2 newPos = transform.position;
+            newPos.y += _riseSpeed * Time.deltaTime;
+            transform.position = newPos;
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        var colliderLayer = other.gameObject.layer;
+        if ((_lavaLayerMask & 1 << colliderLayer) != 0)
+        {
+            Debug.Log("Player melts in lava");
+        }
+    }
+}

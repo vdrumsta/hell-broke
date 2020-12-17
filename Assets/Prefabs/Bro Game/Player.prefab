@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8062448052919946680}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6983471207043107257
 SpriteRenderer:
@@ -92,6 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8539394404862523068}
   - component: {fileID: 6112108507015086908}
+  - component: {fileID: 1104867431}
   m_Layer: 8
   m_Name: Right Arm
   m_TagString: Untagged
@@ -107,11 +108,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4847200478850662260}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.261, y: -0.017, z: 0}
+  m_LocalPosition: {x: -0.225, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 8067513890439658803}
   m_Father: {fileID: 8062448052919946680}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6112108507015086908
 SpriteRenderer:
@@ -164,6 +166,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1104867431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4847200478850662260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a29b0e9461c64854b80091a625e39861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HasWeapon: 1
+  weaponHoldPoint: {fileID: 8067513890439658803}
 --- !u!1 &6699210667218111920
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,7 +209,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8062448052919946680}
-  m_RootOrder: 5
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2352520206561328000
 SpriteRenderer:
@@ -275,7 +291,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8062448052919946680}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1472993640562239780
 SpriteRenderer:
@@ -359,12 +375,12 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 8539394404862523068}
+  - {fileID: 3173381648368961394}
   - {fileID: 5161760483859073940}
   - {fileID: 6183731394226549410}
   - {fileID: 2763087237494567261}
   - {fileID: 6469434907476134911}
-  - {fileID: 8539394404862523068}
-  - {fileID: 3173381648368961394}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -407,14 +423,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   _groundedCheckHeight: 0.05
+  _dragDistanceForSwipe: 25
   _trajectoryPointPrefab: {fileID: 3601170566540002804, guid: 1eea9506de59fd6429efcc448fff16ca, type: 3}
   _numberOfTrajectoryPoints: 10
   _numberOfTrajectoryFadePoints: 4
   isDead: 0
   _playerSpriteCollider: {fileID: 1656523629}
+  _pickUpLayerMask:
+    serializedVersion: 2
+    m_Bits: 16384
   _lavaLayerMask:
     serializedVersion: 2
     m_Bits: 2048
+  _weaponArm: {fileID: 1104867431}
+  _trajectoryPoints: []
 --- !u!111 &1656523626
 Animation:
   m_ObjectHideFlags: 0
@@ -489,7 +511,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8062448052919946680}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &457549552040768658
 SpriteRenderer:
@@ -571,7 +593,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8062448052919946680}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3299666870259043760
 SpriteRenderer:
@@ -624,3 +646,33 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &9045963361463171445
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8067513890439658803}
+  m_Layer: 8
+  m_Name: WeaponHoldPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8067513890439658803
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9045963361463171445}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.162, y: -0.401, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8539394404862523068}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -21,9 +21,13 @@ public class PlayerController : MonoBehaviour
     [Header("Misc")]
     public bool isDead;
     [SerializeField] Collider2D _playerSpriteCollider;
+    [SerializeField] LayerMask _pickUpLayerMask;
 
     [Header("Lava")]
     [SerializeField] LayerMask _lavaLayerMask;
+
+    [Header("Fire")]
+    [SerializeField] WeaponArm _weaponArm;
 
     private Rigidbody2D _rb;
     private bool _isGrounded;
@@ -59,8 +63,8 @@ public class PlayerController : MonoBehaviour
                 _originalTouchScreenPos = touch.position;
             }
 
-            Vector2 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
-            Debug.DrawLine(transform.position, touchPos);
+            Vector2 touchWorldPos = Camera.main.ScreenToWorldPoint(touch.position);
+            Debug.DrawLine(transform.position, touchWorldPos);
 
             CheckIfSwipeIsJump(touch);
 
@@ -68,14 +72,14 @@ public class PlayerController : MonoBehaviour
             direction = direction.normalized;
 
             // Calculate the force of jump depending of how far from the player the person drags his finger
-            float dragDistance = Vector2.Distance(transform.position, touchPos);
+            float dragDistance = Vector2.Distance(transform.position, touchWorldPos);
             float powerPercentage = Mathf.Clamp01(dragDistance / _maxJumpSwipeRadius);
             float currentJumpPower = powerPercentage * _maxJumpPower;
 
             switch (touchPhase)
             {
                 case TouchPhase.Began:
-                    _startedTouchOnPlayer = _playerSpriteCollider.OverlapPoint(touchPos);
+                    _startedTouchOnPlayer = _playerSpriteCollider.OverlapPoint(touchWorldPos);
                     break;
                 case TouchPhase.Stationary:
                     // Update trajectory
@@ -101,6 +105,7 @@ public class PlayerController : MonoBehaviour
                     else
                     {
                         Debug.Log("It's a shot!");
+                        _weaponArm.ShootAt(touchWorldPos);
                     }
 
                     ResetTouchVars();
@@ -206,6 +211,24 @@ public class PlayerController : MonoBehaviour
                 trajectoryPointRenderer.color = newColor;
             }
 
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        int otherLayer = collision.gameObject.layer;
+
+        if ((_pickUpLayerMask & 1 << otherLayer) != 0)
+        {
+            PickUpScript pickUp = collision.gameObject.GetComponent<PickUpScript>();
+
+            // Determine what the pick up is
+            if (pickUp.Type == PickUpType.Weapon)
+            {
+                _weaponArm.AddWeapon(pickUp.WeaponSpawnPrefab);
+            }
+
+            Destroy(collision.gameObject);
         }
     }
 }

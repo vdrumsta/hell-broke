@@ -64,7 +64,6 @@ public class PlayerController : MonoBehaviour
             }
 
             Vector2 touchWorldPos = Camera.main.ScreenToWorldPoint(touch.position);
-            Debug.DrawLine(transform.position, touchWorldPos);
 
             CheckIfSwipeIsJump(touch);
 

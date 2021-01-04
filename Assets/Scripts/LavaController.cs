@@ -30,7 +30,8 @@ public class LavaController : MonoBehaviour
         var colliderLayer = other.gameObject.layer;
         if ((_lavaLayerMask & 1 << colliderLayer) != 0)
         {
-            Debug.Log("Player melts in lava");
+            // Retrieve lava script and make player burn
+
         }
     }
 }

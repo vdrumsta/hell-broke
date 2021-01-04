@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8062448052919946680}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6983471207043107257
 SpriteRenderer:
@@ -107,13 +107,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4847200478850662260}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.225, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8067513890439658803}
-  m_Father: {fileID: 8062448052919946680}
-  m_RootOrder: 0
+  m_Father: {fileID: 5161760483859073940}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6112108507015086908
 SpriteRenderer:
@@ -204,12 +204,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6699210667218111920}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.253, y: -0.017, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 8062448052919946680}
-  m_RootOrder: 1
+  m_Father: {fileID: 5161760483859073940}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2352520206561328000
 SpriteRenderer:
@@ -286,12 +286,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7789380462569797731}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.024, y: 0.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 8062448052919946680}
-  m_RootOrder: 3
+  m_Father: {fileID: 5161760483859073940}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1472993640562239780
 SpriteRenderer:
@@ -355,7 +355,6 @@ GameObject:
   - component: {fileID: 8062448052919946680}
   - component: {fileID: 8062448052919946681}
   - component: {fileID: 8062448052919946682}
-  - component: {fileID: 1656523626}
   - component: {fileID: 1656523629}
   m_Layer: 8
   m_Name: Player
@@ -375,10 +374,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 8539394404862523068}
-  - {fileID: 3173381648368961394}
   - {fileID: 5161760483859073940}
-  - {fileID: 6183731394226549410}
   - {fileID: 2763087237494567261}
   - {fileID: 6469434907476134911}
   m_Father: {fileID: 0}
@@ -437,25 +433,6 @@ MonoBehaviour:
     m_Bits: 2048
   _weaponArm: {fileID: 1104867431}
   _trajectoryPoints: []
---- !u!111 &1656523626
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8062448052919946687}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations:
-  - {fileID: 7400000, guid: 0377b319c2c34714e8eb9d8c309338c6, type: 2}
-  - {fileID: 7400000, guid: c867ba14a86756e46981d9fa7366e526, type: 2}
-  - {fileID: 7400000, guid: 3874580242f917942a5be4e5d948745f, type: 2}
-  - {fileID: 7400000, guid: adf917bd4f52c1b4a869e4bea45b7781, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!61 &1656523629
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -511,7 +488,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8062448052919946680}
-  m_RootOrder: 4
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &457549552040768658
 SpriteRenderer:
@@ -591,9 +568,12 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 6183731394226549410}
+  - {fileID: 8539394404862523068}
+  - {fileID: 3173381648368961394}
   m_Father: {fileID: 8062448052919946680}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3299666870259043760
 SpriteRenderer:

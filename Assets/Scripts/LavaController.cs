@@ -30,8 +30,10 @@ public class LavaController : MonoBehaviour
         var colliderLayer = other.gameObject.layer;
         if ((_lavaLayerMask & 1 << colliderLayer) != 0)
         {
-            // Retrieve lava script and make player burn
-
+            // Retrieve player script and make player burn
+            PlayerController playerScript = other.GetComponent<PlayerController>();
+            playerScript.BurnPlayer();
+            
         }
     }
 }

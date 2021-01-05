@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask _groundLayerMask;
     [SerializeField] float _groundedCheckHeight = 1f;
     [SerializeField] float _dragDistanceForSwipe = 25f;
+    private bool _isGrounded;
 
     [Header("Trajectory")]
     [SerializeField] GameObject _trajectoryPointPrefab;
@@ -25,12 +26,14 @@ public class PlayerController : MonoBehaviour
 
     [Header("Lava")]
     [SerializeField] LayerMask _lavaLayerMask;
+    [SerializeField] float _burnSpeed;
+    private bool _isBurning;
 
-    [Header("Fire")]
+    [Header("Weapon")]
     [SerializeField] WeaponArm _weaponArm;
 
     private Rigidbody2D _rb;
-    private bool _isGrounded;
+    private Material _playerMaterial;
 
     private Vector2 _originalTouchScreenPos;
     private Vector2 _previousPlayerPos;
@@ -42,6 +45,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _playerMaterial = GetComponentInChildren<SpriteRenderer>().sharedMaterial;
 
         // Setup trajectory points
         _trajectoryPoints = new GameObject[_numberOfTrajectoryPoints];
@@ -53,6 +57,26 @@ public class PlayerController : MonoBehaviour
     {
         _isGrounded = IsPlayerGrounded();
 
+        ProcessPlayerTouch();
+        
+        if (_isBurning)
+        {
+            ProcessBurnTick();
+        }
+
+        _previousPlayerPos = transform.position;
+    }
+
+    public void BurnPlayer()
+    {
+        if (!_isBurning)
+        {
+            _isBurning = true;
+        }
+    }
+
+    private void ProcessPlayerTouch()
+    {
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -111,8 +135,20 @@ public class PlayerController : MonoBehaviour
                     break;
             }
         }
+    }
 
-        _previousPlayerPos = transform.position;
+    void OnApplicationQuit()
+    {
+        // Reset "burning" of the player materials
+        _playerMaterial.SetFloat("_Fade", 1f);
+    }
+
+    private void ProcessBurnTick()
+    {
+        float newFadeValue = _playerMaterial.GetFloat("_Fade");
+        newFadeValue -= _burnSpeed * Time.deltaTime;
+        newFadeValue = Mathf.Clamp01(newFadeValue);
+        _playerMaterial.SetFloat("_Fade", newFadeValue);
     }
 
     private bool IsPlayerGrounded()

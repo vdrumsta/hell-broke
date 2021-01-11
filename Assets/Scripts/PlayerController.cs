@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] WeaponArm _weaponArm;
 
     private Rigidbody2D _rb;
+    private Animator _anim;
     private Material _playerMaterial;
 
     private Vector2 _originalTouchScreenPos;
@@ -45,6 +46,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _anim = GetComponent<Animator>();
         _playerMaterial = GetComponentInChildren<SpriteRenderer>().sharedMaterial;
 
         // Setup trajectory points
@@ -58,6 +60,8 @@ public class PlayerController : MonoBehaviour
         _isGrounded = IsPlayerGrounded();
 
         ProcessPlayerTouch();
+
+        UpdatePlayerFacingDirection();
         
         if (_isBurning)
         {
@@ -151,13 +155,37 @@ public class PlayerController : MonoBehaviour
         _playerMaterial.SetFloat("_Fade", newFadeValue);
     }
 
+    private void UpdatePlayerFacingDirection()
+    {
+        if (_rb.velocity.sqrMagnitude > 0.1f)
+        {
+            Vector3 newScale = transform.localScale;
+
+            // Facing left
+            if (_rb.velocity.x < 0)
+            {
+                newScale.x = -(Mathf.Abs(newScale.x));
+            }
+            // Facing right
+            else
+            {
+                newScale.x = Mathf.Abs(newScale.x);
+            }
+
+            transform.localScale = newScale;
+        }
+    }
+
     private bool IsPlayerGrounded()
     {
         RaycastHit2D raycastHit = Physics2D.BoxCast(_playerSpriteCollider.bounds.center, _playerSpriteCollider.bounds.size, 0f, Vector2.down, _groundedCheckHeight, _groundLayerMask);
 
         Color boxColor;
 
-        if (raycastHit.collider != null)
+        bool isStopped = _rb.velocity.sqrMagnitude < 0.1f;
+        bool isGrounded = isStopped && raycastHit.collider != null;
+
+        if (isGrounded)
         {
             boxColor = Color.green;
         }
@@ -171,7 +199,10 @@ public class PlayerController : MonoBehaviour
         Debug.DrawRay(_playerSpriteCollider.bounds.center - new Vector3(_playerSpriteCollider.bounds.extents.x, 0), Vector2.down * (_playerSpriteCollider.bounds.extents.y + _groundedCheckHeight), boxColor);
         Debug.DrawRay(_playerSpriteCollider.bounds.center - new Vector3(_playerSpriteCollider.bounds.extents.x, _playerSpriteCollider.bounds.extents.y + _groundedCheckHeight), Vector2.right * _playerSpriteCollider.bounds.size.x, boxColor);
 
-        return raycastHit.collider != null;
+        // Animation param set
+        _anim.SetBool("isJumping", !isGrounded);
+
+        return isGrounded;
     }
 
     private void UpdateTrajectory(Vector2 direction, float jumpPower)
@@ -220,6 +251,9 @@ public class PlayerController : MonoBehaviour
     private void Jump(Vector2 direction, float jumpPower)
     {
         _rb.AddForce(direction * jumpPower, ForceMode2D.Impulse);
+
+        // Animation triggers
+        _anim.SetTrigger("takeOff");
     }
 
     private Vector2 CalculatePointPosition(float t, Vector2 direction, float jumpPower)

@@ -2370,7 +2370,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3c6830d6a8ae1b04eae3c55dd539a2e6, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3099,34 +3099,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1656523629, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
-      propertyPath: m_UsedByEffector
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 457549552040768658, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a42ba96f4daf63145a411a9aa185067f, type: 2}
-    - target: {fileID: 1472993640562239780, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a42ba96f4daf63145a411a9aa185067f, type: 2}
-    - target: {fileID: 2352520206561328000, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a42ba96f4daf63145a411a9aa185067f, type: 2}
-    - target: {fileID: 3299666870259043760, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a42ba96f4daf63145a411a9aa185067f, type: 2}
-    - target: {fileID: 6112108507015086908, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a42ba96f4daf63145a411a9aa185067f, type: 2}
-    - target: {fileID: 6983471207043107257, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a42ba96f4daf63145a411a9aa185067f, type: 2}
     - target: {fileID: 8062448052919946680, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -3170,14 +3142,6 @@ PrefabInstance:
     - target: {fileID: 8062448052919946680, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8062448052919946682, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
-      propertyPath: _burnSpeed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8062448052919946682, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
-      propertyPath: _maxJumpPower
-      value: 6.5
       objectReference: {fileID: 0}
     - target: {fileID: 8062448052919946687, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
       propertyPath: m_Name

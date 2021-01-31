@@ -9,11 +9,6 @@ public class LavaController : MonoBehaviour
     [SerializeField] private float _riseSpeed;
     [SerializeField] private LayerMask _lavaLayerMask;
 
-    void Start()
-    {
-        
-    }
-
 
     void Update()
     {
@@ -31,9 +26,8 @@ public class LavaController : MonoBehaviour
         if ((_lavaLayerMask & 1 << colliderLayer) != 0)
         {
             // Retrieve player script and make player burn
-            PlayerController playerScript = other.GetComponent<PlayerController>();
-            playerScript.BurnPlayer();
-            
+            LavaMeltScript objectMeltScript = other.GetComponent<LavaMeltScript>();
+            objectMeltScript?.BurnObject();
         }
     }
 }

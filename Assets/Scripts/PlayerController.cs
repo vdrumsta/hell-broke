@@ -26,15 +26,13 @@ public class PlayerController : MonoBehaviour
 
     [Header("Lava")]
     [SerializeField] LayerMask _lavaLayerMask;
-    [SerializeField] float _burnSpeed;
-    private bool _isBurning;
+    
 
     [Header("Weapon")]
     [SerializeField] WeaponArm _weaponArm;
 
     private Rigidbody2D _rb;
     private Animator _anim;
-    private Material _playerMaterial;
 
     private Vector2 _originalTouchScreenPos;
     private Vector2 _previousPlayerPos;
@@ -47,7 +45,6 @@ public class PlayerController : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
-        _playerMaterial = GetComponentInChildren<SpriteRenderer>().sharedMaterial;
 
         // Setup trajectory points
         _trajectoryPoints = new GameObject[_numberOfTrajectoryPoints];
@@ -63,20 +60,9 @@ public class PlayerController : MonoBehaviour
 
         UpdatePlayerFacingDirection();
         
-        if (_isBurning)
-        {
-            ProcessBurnTick();
-        }
+        
 
         _previousPlayerPos = transform.position;
-    }
-
-    public void BurnPlayer()
-    {
-        if (!_isBurning)
-        {
-            _isBurning = true;
-        }
     }
 
     private void ProcessPlayerTouch()
@@ -139,20 +125,6 @@ public class PlayerController : MonoBehaviour
                     break;
             }
         }
-    }
-
-    void OnApplicationQuit()
-    {
-        // Reset "burning" of the player materials
-        _playerMaterial.SetFloat("_Fade", 1f);
-    }
-
-    private void ProcessBurnTick()
-    {
-        float newFadeValue = _playerMaterial.GetFloat("_Fade");
-        newFadeValue -= _burnSpeed * Time.deltaTime;
-        newFadeValue = Mathf.Clamp01(newFadeValue);
-        _playerMaterial.SetFloat("_Fade", newFadeValue);
     }
 
     private void UpdatePlayerFacingDirection()

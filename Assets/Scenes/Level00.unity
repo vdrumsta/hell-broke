@@ -1294,6 +1294,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelLoader
       objectReference: {fileID: 0}
+    - target: {fileID: 902824880403773506, guid: d97f41c96b19fa64fb36391818a2e424, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 902824880403773506, guid: d97f41c96b19fa64fb36391818a2e424, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 902824880403773506, guid: d97f41c96b19fa64fb36391818a2e424, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 902824880403773506, guid: d97f41c96b19fa64fb36391818a2e424, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4973255179728645453, guid: d97f41c96b19fa64fb36391818a2e424, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1342,6 +1358,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 8572135290702945870, guid: d97f41c96b19fa64fb36391818a2e424, type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8572135290702945870, guid: d97f41c96b19fa64fb36391818a2e424, type: 3}
       propertyPath: m_SortingLayerID
       value: 1947620085
@@ -2992,6 +3012,18 @@ PrefabInstance:
     - target: {fileID: 8555244384476278372, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8555244384627225990, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
+      propertyPath: m_SortingOrder
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 8555244384627225991, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 8555244384635908347, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
+      propertyPath: m_SortingOrder
+      value: 201
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}

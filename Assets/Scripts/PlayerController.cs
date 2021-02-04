@@ -235,9 +235,10 @@ public class PlayerController : MonoBehaviour
 
     private void CreateTrajectoryPoints()
     {
+        var trajectoryParent = new GameObject("TrajectoryPoints");
         for (int i = 0; i < _trajectoryPoints.Length; i++)
         {
-            _trajectoryPoints[i] = Instantiate(_trajectoryPointPrefab);
+            _trajectoryPoints[i] = Instantiate(_trajectoryPointPrefab, trajectoryParent.transform);
             _trajectoryPoints[i].SetActive(false);
 
             // Make the last few points fade off

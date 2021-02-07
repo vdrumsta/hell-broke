@@ -20,9 +20,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] int _numberOfTrajectoryFadePoints = 3;
 
     [Header("Misc")]
-    public bool isDead;
     [SerializeField] Collider2D _playerSpriteCollider;
     [SerializeField] LayerMask _pickUpLayerMask;
+    [SerializeField] private ParticleSystem _bloodParticles;
+    [SerializeField] private GameObject _gameOverUIObject;
+
 
     [Header("Lava")]
     [SerializeField] LayerMask _lavaLayerMask;
@@ -35,9 +37,9 @@ public class PlayerController : MonoBehaviour
     private Animator _anim;
 
     private Vector2 _originalTouchScreenPos;
-    private Vector2 _previousPlayerPos;
     private bool _isJump;
     private bool _startedTouchOnPlayer;
+    private bool _isAlive = true;
 
     [SerializeField] private GameObject[] _trajectoryPoints;
 
@@ -56,13 +58,37 @@ public class PlayerController : MonoBehaviour
     {
         _isGrounded = IsPlayerGrounded();
 
+        // Don't allow any player controls once he's dead
+        if (!_isAlive) return;
+
         ProcessPlayerTouch();
 
         UpdatePlayerFacingDirection();
-        
-        
+    }
 
-        _previousPlayerPos = transform.position;
+    public void KillPlayer(bool emitBlood = false)
+    {
+        if (_isAlive)
+        {
+            Debug.Log("Player has been killed");
+
+            _isAlive = false;
+            _anim.SetTrigger("killPlayer");
+
+            if (emitBlood)
+            {
+                _bloodParticles.Play();
+            }
+
+            if (_gameOverUIObject)
+            {
+                _gameOverUIObject.SetActive(true);
+            }
+            else
+            {
+                Debug.LogError("Cant activate game over panel because the reference is null");
+            }
+        }
     }
 
     private void ProcessPlayerTouch()

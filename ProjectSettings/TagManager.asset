@@ -22,8 +22,8 @@ TagManager:
   - PickUp
   - Props
   - BreakableBlock
-  - 
-  - 
+  - ObstacleSpikes
+  - ObstacleDefault
   - 
   - 
   - 
@@ -40,4 +40,43 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Debug
+    uniqueID: 2995048453
+    locked: 0
+  - name: Platform-basic
+    uniqueID: 526737469
+    locked: 0
+  - name: Platform-breakable
+    uniqueID: 372848747
+    locked: 0
+  - name: Obstacle-spikes
+    uniqueID: 2756017485
+    locked: 0
+  - name: Player-LArm
+    uniqueID: 1201722695
+    locked: 0
+  - name: Player-LLeg
+    uniqueID: 2607930911
+    locked: 0
+  - name: Player-RLeg
+    uniqueID: 615781727
+    locked: 0
+  - name: Player-Chest
+    uniqueID: 2540790615
+    locked: 0
+  - name: Player-Head
+    uniqueID: 1797990387
+    locked: 0
+  - name: Player-RArm
+    uniqueID: 3253197433
+    locked: 0
+  - name: Weapon
+    uniqueID: 3094062421
+    locked: 0
+  - name: Player-Particles-Blood
+    uniqueID: 2214986529
+    locked: 0
+  - name: Lava
+    uniqueID: 620771325
     locked: 0

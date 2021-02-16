@@ -13,43 +13,44 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _groundedCheckHeight = 1f;
     [SerializeField] float _dragDistanceForSwipe = 25f;
     private bool _isGrounded;
+    private bool _isJump;
+
+    [Header("Wall Grab")]
+    [SerializeField] LayerMask _grabbableWallMask;
+    public bool _isGrabbingWall;
+    private List<GameObject> _touchedGrabbableWalls;
 
     [Header("Trajectory")]
     [SerializeField] GameObject _trajectoryPointPrefab;
     [SerializeField] int _numberOfTrajectoryPoints = 10;
     [SerializeField] int _numberOfTrajectoryFadePoints = 3;
-
-    [Header("Misc")]
-    [SerializeField] Collider2D _playerSpriteCollider;
-    [SerializeField] LayerMask _pickUpLayerMask;
-    [SerializeField] private ParticleSystem _bloodParticles;
-    [SerializeField] private GameObject _gameOverUIObject;
-
+    private GameObject[] _trajectoryPoints;
 
     [Header("Lava")]
     [SerializeField] LayerMask _lavaLayerMask;
-    
 
     [Header("Weapon")]
     [SerializeField] WeaponArm _weaponArm;
 
+    [Header("Misc")]
+    [SerializeField] Collider2D _playerSpriteCollider;
+    [SerializeField] LayerMask _pickUpLayerMask;
+    [SerializeField] ParticleSystem _bloodParticles;
+    [SerializeField] GameObject _gameOverUIObject;
+    [SerializeField] float _uprightTorque;
+    private Vector2 _originalTouchScreenPos;
+    private bool _isAlive = true;
+
     private Rigidbody2D _rb;
     private Animator _anim;
 
-    private Vector2 _originalTouchScreenPos;
-    private bool _isJump;
-    private bool _startedTouchOnPlayer;
-    private bool _isAlive = true;
-
-    [SerializeField] private GameObject[] _trajectoryPoints;
-
     void Start()
     {
+        _trajectoryPoints = new GameObject[_numberOfTrajectoryPoints];
+        _touchedGrabbableWalls = new List<GameObject>();
+
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
-
-        // Setup trajectory points
-        _trajectoryPoints = new GameObject[_numberOfTrajectoryPoints];
 
         CreateTrajectoryPoints();
     }
@@ -64,6 +65,8 @@ public class PlayerController : MonoBehaviour
         ProcessPlayerTouch();
 
         UpdatePlayerFacingDirection();
+
+        KeepPlayerUpright();
     }
 
     public void KillPlayer(bool emitBlood = false)
@@ -118,7 +121,6 @@ public class PlayerController : MonoBehaviour
             switch (touchPhase)
             {
                 case TouchPhase.Began:
-                    _startedTouchOnPlayer = _playerSpriteCollider.OverlapPoint(touchWorldPos);
                     break;
                 case TouchPhase.Stationary:
                     // Update trajectory
@@ -174,6 +176,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void KeepPlayerUpright()
+    {
+        var rot = Quaternion.FromToRotation(transform.up, Vector3.up);
+        _rb.AddTorque(rot.z * _uprightTorque);
+    }
+
     private bool IsPlayerGrounded()
     {
         RaycastHit2D raycastHit = Physics2D.BoxCast(_playerSpriteCollider.bounds.center, _playerSpriteCollider.bounds.size, 0f, Vector2.down, _groundedCheckHeight, _groundLayerMask);
@@ -224,7 +232,6 @@ public class PlayerController : MonoBehaviour
     private void ResetTouchVars()
     {
         _isJump = false;
-        _startedTouchOnPlayer = false;
         SetTrajectoryPointsActiveState(false);
     }
 
@@ -286,6 +293,7 @@ public class PlayerController : MonoBehaviour
     {
         int otherLayer = collision.gameObject.layer;
 
+        // Check if it's a pick up item
         if ((_pickUpLayerMask & 1 << otherLayer) != 0)
         {
             PickUpScript pickUp = collision.gameObject.GetComponent<PickUpScript>();
@@ -297,6 +305,29 @@ public class PlayerController : MonoBehaviour
             }
 
             Destroy(collision.gameObject);
+        }
+        // Check if it's a grabbable wall
+        else if ((_grabbableWallMask & 1 << otherLayer) != 0)
+        {
+            _touchedGrabbableWalls.Add(collision.gameObject);
+            _isGrabbingWall = true;
+            Debug.Log("Adding " + collision.gameObject.name + " to grabbable walls");
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        int otherLayer = collision.gameObject.layer;
+
+        if ((_grabbableWallMask & 1 << otherLayer) != 0)
+        {
+            _touchedGrabbableWalls.Remove(collision.gameObject);
+            Debug.Log("Removing " + collision.gameObject.name + " from grabbable walls");
+
+            if (_touchedGrabbableWalls.Count <= 0)
+            {
+                _isGrabbingWall = false;
+            }
         }
     }
 }

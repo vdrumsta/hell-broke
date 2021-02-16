@@ -1517,6 +1517,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3890210001347663033, guid: c27bab22ea88948418fa8f6a71589186, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 7eaa9811692a97f45802497a43475640, type: 2}
     - target: {fileID: 3890210001347663036, guid: c27bab22ea88948418fa8f6a71589186, type: 3}
       propertyPath: m_Name
       value: BreakableBlock (2)
@@ -1802,6 +1806,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3890210001347663033, guid: c27bab22ea88948418fa8f6a71589186, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 7eaa9811692a97f45802497a43475640, type: 2}
     - target: {fileID: 3890210001347663036, guid: c27bab22ea88948418fa8f6a71589186, type: 3}
       propertyPath: m_Name
       value: BreakableBlock (3)
@@ -2631,6 +2639,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3890210001347663033, guid: c27bab22ea88948418fa8f6a71589186, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 7eaa9811692a97f45802497a43475640, type: 2}
     - target: {fileID: 3890210001347663036, guid: c27bab22ea88948418fa8f6a71589186, type: 3}
       propertyPath: m_Name
       value: BreakableBlock (1)
@@ -3035,7 +3047,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1281123689774751212, guid: 8745b663f15be4e4c82229c87b99dd4e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.611
+      value: 1.889
       objectReference: {fileID: 0}
     - target: {fileID: 1281123689774751212, guid: 8745b663f15be4e4c82229c87b99dd4e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3192,6 +3204,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3890210001347663033, guid: c27bab22ea88948418fa8f6a71589186, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 7eaa9811692a97f45802497a43475640, type: 2}
     - target: {fileID: 3890210001347663036, guid: c27bab22ea88948418fa8f6a71589186, type: 3}
       propertyPath: m_Name
       value: BreakableBlock

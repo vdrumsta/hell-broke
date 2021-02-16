@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _groundedCheckHeight = 1f;
     [SerializeField] float _dragDistanceForSwipe = 25f;
     private bool _isGrounded;
-    private bool _isJump;
+    private bool _isJumpTouch;
 
     [Header("Wall Grab")]
     [SerializeField] LayerMask _grabbableWallMask;
@@ -64,9 +64,11 @@ public class PlayerController : MonoBehaviour
 
         ProcessPlayerTouch();
 
-        UpdatePlayerFacingDirection();
-
         KeepPlayerUpright();
+
+        ProcessWallGrabbing();
+
+        UpdatePlayerFacingDirection();
     }
 
     public void KillPlayer(bool emitBlood = false)
@@ -124,21 +126,21 @@ public class PlayerController : MonoBehaviour
                     break;
                 case TouchPhase.Stationary:
                     // Update trajectory
-                    if (_isJump)
+                    if (_isJumpTouch)
                     {
                         UpdateTrajectory(direction, currentJumpPower);
                     }
                     break;
                 case TouchPhase.Moved:
                     // Update trajectory
-                    if (_isJump)
+                    if (_isJumpTouch)
                     {
                         UpdateTrajectory(direction, currentJumpPower);
                     }
 
                     break;
                 case TouchPhase.Ended:
-                    if (_isJump)
+                    if (_isJumpTouch)
                     {
                         Debug.Log("It's a jump!");
                         Jump(direction, currentJumpPower);
@@ -152,27 +154,6 @@ public class PlayerController : MonoBehaviour
                     ResetTouchVars();
                     break;
             }
-        }
-    }
-
-    private void UpdatePlayerFacingDirection()
-    {
-        if (_rb.velocity.sqrMagnitude > 0.1f)
-        {
-            Vector3 newScale = transform.localScale;
-
-            // Facing left
-            if (_rb.velocity.x < 0)
-            {
-                newScale.x = -(Mathf.Abs(newScale.x));
-            }
-            // Facing right
-            else
-            {
-                newScale.x = Mathf.Abs(newScale.x);
-            }
-
-            transform.localScale = newScale;
         }
     }
 
@@ -231,7 +212,7 @@ public class PlayerController : MonoBehaviour
 
     private void ResetTouchVars()
     {
-        _isJump = false;
+        _isJumpTouch = false;
         SetTrajectoryPointsActiveState(false);
     }
 
@@ -242,13 +223,13 @@ public class PlayerController : MonoBehaviour
     /// <param name="currentTouchPos"></param>
     private void CheckIfSwipeIsJump(Touch currentTouch)
     {
-        if (!_isJump && _isGrounded && currentTouch.phase != TouchPhase.Began)
+        if (!_isJumpTouch && _isGrounded && currentTouch.phase != TouchPhase.Began)
         {
             float fingerMoveDistance = Vector2.Distance(currentTouch.position, _originalTouchScreenPos);
             
             if (fingerMoveDistance > _dragDistanceForSwipe)
             {
-                _isJump = true;
+                _isJumpTouch = true;
             }
         }
     }
@@ -289,6 +270,55 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Determine which direction the player is facing based on his velocity and whether he's grabbing a wall.
+    /// Wall grabbing takes precedence over velocity check.
+    /// </summary>
+    private void UpdatePlayerFacingDirection()
+    {
+        bool isFacingRight = true;
+        if (_isGrabbingWall && _touchedGrabbableWalls.Count > 0)
+        {
+            isFacingRight = _touchedGrabbableWalls[0].transform.position.x < transform.position.x;
+        }
+        else if (_rb.velocity.sqrMagnitude > 0.1f)
+        {
+            isFacingRight = _rb.velocity.x > 0;
+        }
+
+        Vector3 newScale = transform.localScale;
+
+        // Facing right
+        if (isFacingRight)
+        {
+            newScale.x = Mathf.Abs(newScale.x);
+        }
+        // Facing left
+        else
+        {
+            newScale.x = -(Mathf.Abs(newScale.x));
+        }
+
+        transform.localScale = newScale;
+    }
+
+    private void ProcessWallGrabbing()
+    {
+        if (_touchedGrabbableWalls.Count > 0)
+        {
+            _isGrabbingWall = true;
+
+            // Freeze the player so he doesn't fall
+            Vector2 newVelocity = _rb.velocity;
+            newVelocity.y = 0;
+            _rb.velocity = newVelocity;
+        }
+        else
+        {
+            _isGrabbingWall = false;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         int otherLayer = collision.gameObject.layer;
@@ -311,7 +341,6 @@ public class PlayerController : MonoBehaviour
         {
             _touchedGrabbableWalls.Add(collision.gameObject);
             _isGrabbingWall = true;
-            Debug.Log("Adding " + collision.gameObject.name + " to grabbable walls");
         }
     }
 
@@ -322,7 +351,6 @@ public class PlayerController : MonoBehaviour
         if ((_grabbableWallMask & 1 << otherLayer) != 0)
         {
             _touchedGrabbableWalls.Remove(collision.gameObject);
-            Debug.Log("Removing " + collision.gameObject.name + " from grabbable walls");
 
             if (_touchedGrabbableWalls.Count <= 0)
             {

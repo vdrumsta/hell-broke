@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     [Header("Wall Grab")]
     [SerializeField] LayerMask _grabbableWallMask;
     public bool _isGrabbingWall;
+    private bool _limitVelocityOnWallGrabbing;
     private List<GameObject> _touchedGrabbableWalls;
 
     [Header("Trajectory")]
@@ -79,6 +80,9 @@ public class PlayerController : MonoBehaviour
 
             _isAlive = false;
             _anim.SetTrigger("killPlayer");
+
+            // Make the player face in the right direction so that his dead body is close to the floor
+            FacePlayerInDirection(faceRight: true);
 
             if (emitBlood)
             {
@@ -142,12 +146,10 @@ public class PlayerController : MonoBehaviour
                 case TouchPhase.Ended:
                     if (_isJumpTouch)
                     {
-                        Debug.Log("It's a jump!");
                         Jump(direction, currentJumpPower);
                     }
                     else
                     {
-                        Debug.Log("It's a shot!");
                         _weaponArm.ShootAt(touchWorldPos);
                     }
 
@@ -223,7 +225,7 @@ public class PlayerController : MonoBehaviour
     /// <param name="currentTouchPos"></param>
     private void CheckIfSwipeIsJump(Touch currentTouch)
     {
-        if (!_isJumpTouch && _isGrounded && currentTouch.phase != TouchPhase.Began)
+        if (!_isJumpTouch && (_isGrounded || _isGrabbingWall) && currentTouch.phase != TouchPhase.Began)
         {
             float fingerMoveDistance = Vector2.Distance(currentTouch.position, _originalTouchScreenPos);
             
@@ -240,6 +242,9 @@ public class PlayerController : MonoBehaviour
 
         // Animation triggers
         _anim.SetTrigger("takeOff");
+
+        // If the player was grabbing a wall, we want to stop limiting y velocity so that he can jump upwards
+        _limitVelocityOnWallGrabbing = false;
     }
 
     private Vector2 CalculatePointPosition(float t, Vector2 direction, float jumpPower)
@@ -286,10 +291,15 @@ public class PlayerController : MonoBehaviour
             isFacingRight = _rb.velocity.x > 0;
         }
 
+        FacePlayerInDirection(faceRight: isFacingRight);
+    }
+
+    private void FacePlayerInDirection(bool faceRight)
+    {
         Vector3 newScale = transform.localScale;
 
         // Facing right
-        if (isFacingRight)
+        if (faceRight)
         {
             newScale.x = Mathf.Abs(newScale.x);
         }
@@ -308,14 +318,18 @@ public class PlayerController : MonoBehaviour
         {
             _isGrabbingWall = true;
 
-            // Freeze the player so he doesn't fall
-            Vector2 newVelocity = _rb.velocity;
-            newVelocity.y = 0;
-            _rb.velocity = newVelocity;
+            if (_limitVelocityOnWallGrabbing)
+            {
+                // Freeze the player so he doesn't fall
+                Vector2 newVelocity = _rb.velocity;
+                newVelocity.y = 0;
+                _rb.velocity = newVelocity;
+            }
         }
         else
         {
             _isGrabbingWall = false;
+            _limitVelocityOnWallGrabbing = true;
         }
     }
 

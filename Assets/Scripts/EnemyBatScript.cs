@@ -31,8 +31,23 @@ public class EnemyBatScript : MonoBehaviour
 
         if (_foundPlayer)
         {
+            Vector2 directionToPlayer = GetPlayerDirection();
+
             // Add continuous force towards player
-            _rb.AddForce(GetPlayerDirection() * _flySpeed, ForceMode2D.Force);
+            _rb.AddForce(directionToPlayer * _flySpeed, ForceMode2D.Force);
+
+            // Add corrective force so that the enemy doesn't 'orbit' around the player
+            Vector2 correctiveDirection = Vector2.zero;
+            if (Vector3.Cross(directionToPlayer, _rb.velocity.normalized).z > 0)
+            {
+                correctiveDirection = PerpendicularClockwise(directionToPlayer);
+            }
+            else
+            {
+                correctiveDirection = PerpendicularCounterClockwise(directionToPlayer);
+            }
+            
+            _rb.AddForce(correctiveDirection, ForceMode2D.Force);
         }
     }
 
@@ -42,5 +57,15 @@ public class EnemyBatScript : MonoBehaviour
         directionTowardsPlayer = directionTowardsPlayer.normalized;
 
         return directionTowardsPlayer;
+    }
+
+    private Vector2 PerpendicularClockwise(Vector2 vector2)
+    {
+        return new Vector2(vector2.y, -vector2.x);
+    }
+
+    private Vector2 PerpendicularCounterClockwise(Vector2 vector2)
+    {
+        return new Vector2(-vector2.y, vector2.x);
     }
 }

@@ -36,7 +36,7 @@ public class EnemyBatScript : MonoBehaviour
             // Add continuous force towards player
             _rb.AddForce(directionToPlayer * _flySpeed, ForceMode2D.Force);
 
-            // Add corrective force so that the enemy doesn't 'orbit' around the player
+            // Add corrective force so that the enemy doesn't 'orbit' around the player 
             Vector2 correctiveDirection = Vector2.zero;
             if (Vector3.Cross(directionToPlayer, _rb.velocity.normalized).z > 0)
             {

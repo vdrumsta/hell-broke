@@ -53,12 +53,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 866498334915702029}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 8555244384476278372}
-  m_RootOrder: 2
+  m_Father: {fileID: 3679018240736441937}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2676988673878537124
 GameObject:
@@ -121,6 +121,7 @@ Transform:
   m_LocalScale: {x: 0.17299788, y: 0.11806419, z: 0.61846745}
   m_Children:
   - {fileID: 1097448583011363738}
+  - {fileID: 6262066730196624329}
   m_Father: {fileID: 8555244384635908292}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -140,6 +141,15 @@ MonoBehaviour:
   _rightLimit: {fileID: 9136810626940494514}
   _leftLimit: {fileID: 4050803784799097056}
   _maxBubbles: 2
+  _minStartSize: 0
+  _maxStartSize: 0
+  _minEndSize: 0.1
+  _maxEndSize: 0.5
+  _minGrowTime: 0.5
+  _maxGrowTime: 2
+  _sparksParent: {fileID: 6262066730196624329}
+  _sparksPrefab: {fileID: 5225920440337464774, guid: f24b1ae21a9e29644b4e71b9a5508418, type: 3}
+  _sizePerSpark: 0.1
 --- !u!1 &8083823864906901775
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,7 +209,6 @@ Transform:
   m_Children:
   - {fileID: 8555244384635908292}
   - {fileID: 8555244384627225991}
-  - {fileID: 6262066730196624329}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -228,7 +237,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8555244384627225989}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.48795095, y: -5.294165, z: -93.13259}
+  m_LocalPosition: {x: -0.48795095, y: -4.23, z: -93.13259}
   m_LocalScale: {x: 5.7804174, y: 5.780417, z: 1.6169}
   m_Children: []
   m_Father: {fileID: 8555244384476278372}
@@ -273,7 +282,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 882088489
   m_SortingLayer: 15
-  m_SortingOrder: 201
+  m_SortingOrder: 200
   m_Sprite: {fileID: 7482667652216324306, guid: db750325989564987a34393247d883b4, type: 3}
   m_Color: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 0.62352943}
   m_FlipX: 0
@@ -359,7 +368,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 620771325
   m_SortingLayer: 17
-  m_SortingOrder: 200
+  m_SortingOrder: 201
   m_Sprite: {fileID: 21300000, guid: 7ca43e9f79788824f88addf24dae02c2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -387,7 +396,7 @@ MonoBehaviour:
   _riseSpeed: 1
   _lavaLayerMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 8448
 --- !u!61 &8555244384635908293
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -425,7 +434,7 @@ BuoyancyEffector2D:
   m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 8448
   m_SurfaceLevel: 0.5
   m_Density: 5
   m_LinearDrag: 5

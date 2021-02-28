@@ -2744,7 +2744,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 772554606108789913, guid: 339c89291d9dbc041b210683ec494e2c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.823
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 772554606108789913, guid: 339c89291d9dbc041b210683ec494e2c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3139,6 +3139,14 @@ PrefabInstance:
     - target: {fileID: 8555244384627225991, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
       propertyPath: m_LocalPosition.y
       value: -4.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 8555244384635908294, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
+      propertyPath: m_ColliderMask.m_Bits
+      value: 8448
+      objectReference: {fileID: 0}
+    - target: {fileID: 8555244384635908346, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
+      propertyPath: _lavaLayerMask.m_Bits
+      value: 8448
       objectReference: {fileID: 0}
     - target: {fileID: 8555244384635908347, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
       propertyPath: m_SortingOrder

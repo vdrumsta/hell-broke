@@ -2,7 +2,10 @@
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
+
+using Debug = UnityEngine.Debug;
 
 public class PlayerController : MonoBehaviour
 {
@@ -33,6 +36,12 @@ public class PlayerController : MonoBehaviour
     [Header("Weapon")]
     [SerializeField] WeaponArm _weaponArm;
 
+    [Header("Stun")]
+    [SerializeField] GameObject _stunEffectRef;
+    private bool _isStunned = false;
+    private float _stunTimeLength;
+    private Stopwatch _stunTimer;
+
     [Header("Misc")]
     [SerializeField] Collider2D _playerSpriteCollider;
     [SerializeField] LayerMask _pickUpLayerMask;
@@ -41,6 +50,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _uprightTorque;
     private Vector2 _originalTouchScreenPos;
     private bool _isAlive = true;
+    
 
     private Rigidbody2D _rb;
     private Animator _anim;
@@ -49,6 +59,7 @@ public class PlayerController : MonoBehaviour
     {
         _trajectoryPoints = new GameObject[_numberOfTrajectoryPoints];
         _touchedGrabbableWalls = new List<GameObject>();
+        _stunTimer = new Stopwatch();
 
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
@@ -62,6 +73,8 @@ public class PlayerController : MonoBehaviour
 
         // Don't allow any player controls once he's dead
         if (!_isAlive) return;
+
+        CheckStunState();
 
         ProcessPlayerTouch();
 
@@ -100,6 +113,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void StunPlayer(float stunTime = 1f)
+    {
+        _isStunned = true;
+        _stunTimeLength = stunTime;
+        _stunTimer.Restart();
+        _stunEffectRef?.SetActive(true);
+    }
+
+    private void CheckStunState()
+    {
+        if (_stunTimer.Elapsed.TotalSeconds >= _stunTimeLength)
+        {
+            _isStunned = false;
+            _stunEffectRef?.SetActive(false);
+        }
+    }
+
     private void ProcessPlayerTouch()
     {
         if (Input.touchCount > 0)
@@ -114,7 +144,7 @@ public class PlayerController : MonoBehaviour
 
             Vector2 touchWorldPos = Camera.main.ScreenToWorldPoint(touch.position);
 
-            CheckIfSwipeIsJump(touch);
+            _isJumpTouch = CheckIfSwipeIsJump(touch);
 
             Vector2 direction = touch.position - _originalTouchScreenPos;
             direction = direction.normalized;
@@ -129,19 +159,10 @@ public class PlayerController : MonoBehaviour
                 case TouchPhase.Began:
                     break;
                 case TouchPhase.Stationary:
-                    // Update trajectory
-                    if (_isJumpTouch)
-                    {
-                        UpdateTrajectory(direction, currentJumpPower);
-                    }
+                    UpdateTrajectory(direction, currentJumpPower);
                     break;
                 case TouchPhase.Moved:
-                    // Update trajectory
-                    if (_isJumpTouch)
-                    {
-                        UpdateTrajectory(direction, currentJumpPower);
-                    }
-
+                    UpdateTrajectory(direction, currentJumpPower);
                     break;
                 case TouchPhase.Ended:
                     if (_isJumpTouch)
@@ -196,12 +217,22 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateTrajectory(Vector2 direction, float jumpPower)
     {
-        SetTrajectoryPointsActiveState(true);
+        if (!isViableJump())
+        {
+            SetTrajectoryPointsActiveState(false);
+            return;
+        }
 
+        SetTrajectoryPointsActiveState(true);
         for (int i = 0; i < _trajectoryPoints.Length; i++)
         {
             _trajectoryPoints[i].transform.position =  CalculatePointPosition(i * 0.1f, direction, jumpPower);
         }
+    }
+
+    private bool isViableJump()
+    {
+        return _isJumpTouch && (_isGrounded || _isGrabbingWall) && !_isStunned;
     }
 
     private void SetTrajectoryPointsActiveState(bool state)
@@ -223,21 +254,26 @@ public class PlayerController : MonoBehaviour
     /// then activate the trajectory
     /// </summary>
     /// <param name="currentTouchPos"></param>
-    private void CheckIfSwipeIsJump(Touch currentTouch)
+    private bool CheckIfSwipeIsJump(Touch currentTouch)
     {
-        if (!_isJumpTouch && (_isGrounded || _isGrabbingWall) && currentTouch.phase != TouchPhase.Began)
+        if (!_isJumpTouch && !_isStunned && (_isGrounded || _isGrabbingWall) && currentTouch.phase != TouchPhase.Began)
         {
             float fingerMoveDistance = Vector2.Distance(currentTouch.position, _originalTouchScreenPos);
             
             if (fingerMoveDistance > _dragDistanceForSwipe)
             {
-                _isJumpTouch = true;
+                return true;
             }
         }
+
+        // Otherwise return the previous state
+        return _isJumpTouch;
     }
 
     private void Jump(Vector2 direction, float jumpPower)
     {
+        if (!isViableJump()) return;
+
         _rb.AddForce(direction * jumpPower, ForceMode2D.Impulse);
 
         // Animation triggers

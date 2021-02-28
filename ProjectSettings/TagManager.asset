@@ -74,11 +74,20 @@ TagManager:
   - name: Weapon
     uniqueID: 3094062421
     locked: 0
+  - name: Player-Particles-Stun
+    uniqueID: 687498037
+    locked: 0
   - name: Player-Particles-Blood
     uniqueID: 2214986529
     locked: 0
   - name: Enemy
     uniqueID: 1539948147
+    locked: 0
+  - name: LavaSmoke
+    uniqueID: 882088489
+    locked: 0
+  - name: LavaBubble
+    uniqueID: 2895412089
     locked: 0
   - name: Lava
     uniqueID: 620771325

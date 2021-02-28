@@ -2,24 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBatScript : MonoBehaviour
+public class EnemyBatScript : EnemyScript
 {
     [SerializeField] private float _flySpeed;
+    [SerializeField] private float _bounceBackSpeed;
+    [SerializeField] private float _dieKnockbackSpeed;
+    [SerializeField] private float _dieTorqueSpeed;
     [SerializeField] private float _distanceToActivate; // Distance to player before activating
+    [SerializeField] private float _playerStunTime = 1f;
+
 
     private Rigidbody2D _rb;
     private GameObject _playerRef;
+    private PlayerController _playerController;
     private bool _foundPlayer;
+    private bool _isDead;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _playerRef = FindObjectOfType<PlayerController>().gameObject;
+        _playerController = FindObjectOfType<PlayerController>();
+        _playerRef = _playerController.gameObject;
     }
 
     void Update()
     {
-        if (!_playerRef) return;
+        if (!_playerRef || _isDead) return;
 
         if (!_foundPlayer && Vector2.Distance(transform.position, _playerRef.transform.position) < _distanceToActivate)
         {
@@ -40,15 +48,27 @@ public class EnemyBatScript : MonoBehaviour
             Vector2 correctiveDirection = Vector2.zero;
             if (Vector3.Cross(directionToPlayer, _rb.velocity.normalized).z > 0)
             {
-                correctiveDirection = PerpendicularClockwise(directionToPlayer);
+                correctiveDirection = Utils2D.PerpendicularClockwise(directionToPlayer);
             }
             else
             {
-                correctiveDirection = PerpendicularCounterClockwise(directionToPlayer);
+                correctiveDirection = Utils2D.PerpendicularCounterClockwise(directionToPlayer);
             }
             
             _rb.AddForce(correctiveDirection, ForceMode2D.Force);
         }
+    }
+
+    public override void Hit(Vector2 knockbackDirection)
+    {
+        _isDead = true;
+        _rb.constraints = RigidbodyConstraints2D.None;
+        _rb.AddForce(knockbackDirection * _dieKnockbackSpeed, ForceMode2D.Impulse);
+
+        // If knockbacked left, then spin left
+        float torqueForce = knockbackDirection.x > 0 ? -_dieTorqueSpeed : _dieTorqueSpeed;
+        _rb.AddTorque(torqueForce, ForceMode2D.Impulse);
+        _rb.gravityScale = 1f;
     }
 
     private Vector2 GetPlayerDirection()
@@ -59,13 +79,15 @@ public class EnemyBatScript : MonoBehaviour
         return directionTowardsPlayer;
     }
 
-    private Vector2 PerpendicularClockwise(Vector2 vector2)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        return new Vector2(vector2.y, -vector2.x);
-    }
+        if (_isDead) return;
 
-    private Vector2 PerpendicularCounterClockwise(Vector2 vector2)
-    {
-        return new Vector2(-vector2.y, vector2.x);
+        if (collision.gameObject == _playerRef)
+        {
+            // Bounce back upon colliding with the player
+            _rb.AddForce(-(GetPlayerDirection()) * _bounceBackSpeed, ForceMode2D.Impulse);
+            _playerController.StunPlayer(_playerStunTime);
+        }
     }
 }

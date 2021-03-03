@@ -59,7 +59,7 @@ public class EnemyBatScript : EnemyScript
         }
     }
 
-    public override void Hit(Vector2 knockbackDirection)
+    public override void Die(Vector2 knockbackDirection)
     {
         _isDead = true;
         _rb.constraints = RigidbodyConstraints2D.None;
@@ -69,6 +69,14 @@ public class EnemyBatScript : EnemyScript
         float torqueForce = knockbackDirection.x > 0 ? -_dieTorqueSpeed : _dieTorqueSpeed;
         _rb.AddTorque(torqueForce, ForceMode2D.Impulse);
         _rb.gravityScale = 1f;
+
+        // Disable collision between the player and the bat
+        var batCollider = GetComponent<Collider2D>();
+        var playerColliders = _playerRef.GetComponents<Collider2D>();
+        foreach(var playerCollider in playerColliders)
+        {
+            Physics2D.IgnoreCollision(batCollider, playerCollider);
+        }
     }
 
     private Vector2 GetPlayerDirection()

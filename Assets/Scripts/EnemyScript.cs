@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class EnemyScript : MonoBehaviour
 {
-    public abstract void Hit(Vector2 knockbackDirection);
+    public abstract void Die(Vector2 knockbackDirection);
 }

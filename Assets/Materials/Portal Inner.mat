@@ -69,6 +69,7 @@ Material:
     - _StencilWriteMask: 251.93
     - _UseUIAlphaClip: 0
     m_Colors:
+    - Color_41769092e29a4e1ea7108e1fb6374366: {r: 1, g: 1, b: 1, a: 0}
     - Vector2_4747B95: {r: 0.5, g: 0.5, b: 0, a: 0}
     - _ClipRect: {r: -32744.3, g: -32767, b: 32767, a: 32767}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     private bool _limitVelocityOnWallGrabbing;
     private List<GameObject> _touchedGrabbableWalls;
 
-    [Header("Trajectory")]
+    [Header("Jump Trajectory")]
     [SerializeField] GameObject _trajectoryPointPrefab;
     [SerializeField] int _numberOfTrajectoryPoints = 10;
     [SerializeField] int _numberOfTrajectoryFadePoints = 3;
@@ -50,7 +50,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _uprightTorque;
     private Vector2 _originalTouchScreenPos;
     private bool _isAlive = true;
-    
+
+    [Header("Portal")]
+    private float _timeToEnterPortal;
+    private bool _movingTowardsPortal;
+    private Stopwatch _portalEnterTimer;
+    private Vector2 _portalEnteringStartingPosition;
+    private Vector2 _portalPosition;
+
 
     private Rigidbody2D _rb;
     private Animator _anim;
@@ -60,6 +67,7 @@ public class PlayerController : MonoBehaviour
         _trajectoryPoints = new GameObject[_numberOfTrajectoryPoints];
         _touchedGrabbableWalls = new List<GameObject>();
         _stunTimer = new Stopwatch();
+        _portalEnterTimer = new Stopwatch();
 
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
@@ -83,33 +91,51 @@ public class PlayerController : MonoBehaviour
         ProcessWallGrabbing();
 
         UpdatePlayerFacingDirection();
+
+        if (_movingTowardsPortal)
+        {
+            MoveTowardsPortal();
+        }
+    }
+
+    public void EnterPortal(Vector2 portalPosition, float timeToEnterPortal)
+    {
+        if (!_isAlive) return;
+
+        _anim.enabled = false;
+        _rb.simulated = false;
+        _portalEnteringStartingPosition = transform.position;
+        _timeToEnterPortal = timeToEnterPortal;
+        _portalPosition = portalPosition;
+        _rb.simulated = false;
+        _movingTowardsPortal = true;
+        _portalEnterTimer.Start();
     }
 
     public void KillPlayer(bool emitBlood = false)
     {
-        if (_isAlive)
+        if (!_isAlive) return;
+        
+        Debug.Log("Player has been killed");
+
+        _isAlive = false;
+        _anim.SetTrigger("killPlayer");
+
+        // Make the player face in the right direction so that his dead body is close to the floor
+        FacePlayerInDirection(faceRight: true);
+
+        if (emitBlood)
         {
-            Debug.Log("Player has been killed");
+            _bloodParticles.Play();
+        }
 
-            _isAlive = false;
-            _anim.SetTrigger("killPlayer");
-
-            // Make the player face in the right direction so that his dead body is close to the floor
-            FacePlayerInDirection(faceRight: true);
-
-            if (emitBlood)
-            {
-                _bloodParticles.Play();
-            }
-
-            if (_gameOverUIObject)
-            {
-                _gameOverUIObject.SetActive(true);
-            }
-            else
-            {
-                Debug.LogError("Cant activate game over panel because the reference is null");
-            }
+        if (_gameOverUIObject)
+        {
+            _gameOverUIObject.SetActive(true);
+        }
+        else
+        {
+            Debug.LogError("Cant activate game over panel because the reference is null");
         }
     }
 
@@ -367,6 +393,27 @@ public class PlayerController : MonoBehaviour
             _isGrabbingWall = false;
             _limitVelocityOnWallGrabbing = true;
         }
+    }
+
+    private void MoveTowardsPortal()
+    {
+        // Check if we're finished entering the portal
+        if (_portalEnterTimer.Elapsed.TotalSeconds > _timeToEnterPortal)
+        {
+            Debug.Log("Player has entered the portal");
+            _movingTowardsPortal = false;
+            return;
+        }
+
+        float enterT = (float)_portalEnterTimer.Elapsed.TotalSeconds / _timeToEnterPortal;
+
+        // Move players position towards the portal
+        Vector2 newPos = Vector2.Lerp(_portalEnteringStartingPosition, _portalPosition, enterT);
+        transform.position = newPos;
+
+        // Shrink player
+        float newScaleValue = 1 - enterT;
+        transform.localScale = new Vector2(newScaleValue, newScaleValue);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

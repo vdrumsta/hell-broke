@@ -218,8 +218,8 @@ public class PlayerController : MonoBehaviour
 
         Color boxColor;
 
-        bool isStopped = _rb.velocity.sqrMagnitude < 0.1f;
-        bool isGrounded = isStopped && raycastHit.collider != null;
+        bool isMovingDown = _rb.velocity.y <= 0;
+        bool isGrounded = isMovingDown && raycastHit.collider != null;
 
         if (isGrounded)
         {

@@ -5802,41 +5802,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1139955757751630620, guid: d492a7be264d1a8478b705b4d9012c17, type: 3}
   m_PrefabInstance: {fileID: 1515658115}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2109229760 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8062448052919946687, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
-  m_PrefabInstance: {fileID: 8062448053631019628}
-  m_PrefabAsset: {fileID: 0}
---- !u!60 &2109229761
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2109229760}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0, y: 0.43}
-      - {x: -0.4, y: 0.25}
-      - {x: -0.18, y: -0.49}
-      - {x: 0.15, y: -0.49}
-      - {x: 0.4, y: 0.25}
 --- !u!1001 &2109254642
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6468,18 +6433,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 730481097, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1052115550, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
-      propertyPath: _distToForgetHelpedPlatform
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3572705262157832211, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8062448052919946680, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -6524,22 +6477,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8062448052919946681, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8062448052919946682, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
-      propertyPath: _uprightTorque
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8062448052919946682, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
       propertyPath: _gameOverUIObject
       value: 
       objectReference: {fileID: 792308751}
-    - target: {fileID: 8062448052919946682, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
-      propertyPath: _playerSpriteCollider
-      value: 
-      objectReference: {fileID: 2109229761}
     - target: {fileID: 8062448052919946687, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
       propertyPath: m_Name
       value: Player

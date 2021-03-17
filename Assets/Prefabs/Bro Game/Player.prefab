@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 557729407}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.044, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8062448052919946680}
@@ -5727,7 +5727,7 @@ GameObject:
   - component: {fileID: 2163238882875758845}
   - component: {fileID: 5997476028213551}
   - component: {fileID: 1052115550}
-  - component: {fileID: 3572705262157832211}
+  - component: {fileID: 2109229761}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -5774,7 +5774,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 0
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &8062448052919946682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5796,7 +5796,7 @@ MonoBehaviour:
   _dragDistanceForSwipe: 25
   _grabbableWallMask:
     serializedVersion: 2
-    m_Bits: 2162688
+    m_Bits: 65536
   _isGrabbingWall: 0
   _trajectoryPointPrefab: {fileID: 3601170566540002804, guid: 1eea9506de59fd6429efcc448fff16ca, type: 3}
   _numberOfTrajectoryPoints: 10
@@ -5807,13 +5807,13 @@ MonoBehaviour:
   _weaponArm: {fileID: 1104867431}
   _stunEffectRef: {fileID: 2531830065385852215}
   isAlive: 1
-  _playerSpriteCollider: {fileID: 3572705262157832211}
+  _playerSpriteCollider: {fileID: 2109229761}
   _pickUpLayerMask:
     serializedVersion: 2
     m_Bits: 16384
   _bloodParticles: {fileID: 4814032789571090926}
   _gameOverUIObject: {fileID: 0}
-  _uprightTorque: 1
+  _uprightTorque: 0
 --- !u!95 &730481097
 Animator:
   serializedVersion: 3
@@ -5822,7 +5822,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8062448052919946687}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 6d6c06efdfa8f13418ed3bafd8836220, type: 2}
   m_CullingMode: 0
@@ -5915,8 +5915,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   _distToForgetHelpedPlatform: 1
---- !u!70 &3572705262157832211
-CapsuleCollider2D:
+--- !u!60 &2109229761
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5924,13 +5924,27 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 8062448052919946687}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: abd11761bd4734540b3a27d8cef839fb, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.025}
-  m_Size: {x: 0.84, y: 0.95}
-  m_Direction: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0, y: 0.43}
+      - {x: -0.4, y: 0.25}
+      - {x: -0.18, y: -0.49}
+      - {x: 0.15, y: -0.49}
+      - {x: 0.4, y: 0.25}
 --- !u!1 &8191072192617374328
 GameObject:
   m_ObjectHideFlags: 0

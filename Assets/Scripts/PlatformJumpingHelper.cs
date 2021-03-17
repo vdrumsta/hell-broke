@@ -54,7 +54,7 @@ public class PlatformJumpingHelper : MonoBehaviour
                 var bottomOfPlayerToTopOfPlatformDistance = topOfPlatformYCoord - bottomOfPlayerYCoord;
 
                 var newPos = transform.position;
-                newPos.y = newPos.y + bottomOfPlayerToTopOfPlatformDistance + 0.01f;
+                newPos.y = newPos.y + bottomOfPlayerToTopOfPlatformDistance + 0.05f;
                 transform.position = newPos;
 
                 _rb.velocity = Vector2.zero;

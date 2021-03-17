@@ -43,13 +43,14 @@ public class PlayerController : MonoBehaviour
     private Stopwatch _stunTimer;
 
     [Header("Misc")]
+    [HideInInspector] public bool isAlive = true;
     [SerializeField] Collider2D _playerSpriteCollider;
     [SerializeField] LayerMask _pickUpLayerMask;
     [SerializeField] ParticleSystem _bloodParticles;
     [SerializeField] GameObject _gameOverUIObject;
     [SerializeField] float _uprightTorque;
     private Vector2 _originalTouchScreenPos;
-    private bool _isAlive = true;
+    private bool _isFacingRight;
 
     [Header("Portal")]
     private float _timeToEnterPortal;
@@ -79,8 +80,13 @@ public class PlayerController : MonoBehaviour
     {
         _isGrounded = IsPlayerGrounded();
 
+        if (_isGrounded && _rb.velocity.y < 0.1f)
+        {
+            //_rb.velocity = new Vector2(0, _rb.velocity.y);
+        }
+
         // Don't allow any player controls once he's dead
-        if (!_isAlive) return;
+        if (!isAlive) return;
 
         CheckStunState();
 
@@ -100,7 +106,7 @@ public class PlayerController : MonoBehaviour
 
     public void EnterPortal(Vector2 portalPosition, float timeToEnterPortal)
     {
-        if (!_isAlive) return;
+        if (!isAlive) return;
 
         _anim.enabled = false;
         _rb.simulated = false;
@@ -114,11 +120,11 @@ public class PlayerController : MonoBehaviour
 
     public void KillPlayer(bool emitBlood = false)
     {
-        if (!_isAlive) return;
+        if (!isAlive) return;
         
         Debug.Log("Player has been killed");
 
-        _isAlive = false;
+        isAlive = false;
         _anim.SetTrigger("killPlayer");
 
         // Make the player face in the right direction so that his dead body is close to the floor
@@ -215,12 +221,12 @@ public class PlayerController : MonoBehaviour
     private bool IsPlayerGrounded()
     {
         RaycastHit2D raycastHit = Physics2D.BoxCast(_playerSpriteCollider.bounds.center, _playerSpriteCollider.bounds.size, 0f, Vector2.down, _groundedCheckHeight, _groundLayerMask);
-
+        
         Color boxColor;
 
-        bool isMovingDown = _rb.velocity.y <= 0;
-        bool isGrounded = isMovingDown && raycastHit.collider != null;
-
+        bool isStable = _rb.velocity.y < 0.1f && _rb.velocity.y > -0.1f;
+        bool isGrounded = isStable && raycastHit.collider != null;
+        //Debug.Log("hit = " + (bool) (raycastHit.collider != null) + "; isMovingDown = " + isStable + "; center = " + _playerSpriteCollider.bounds.center + "; size = " + _playerSpriteCollider.bounds.size);
         if (isGrounded)
         {
             boxColor = Color.green;
@@ -343,17 +349,16 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void UpdatePlayerFacingDirection()
     {
-        bool isFacingRight = true;
         if (_isGrabbingWall && _touchedGrabbableWalls.Count > 0)
         {
-            isFacingRight = _touchedGrabbableWalls[0].transform.position.x < transform.position.x;
+            _isFacingRight = _touchedGrabbableWalls[0].transform.position.x < transform.position.x;
         }
         else if (_rb.velocity.sqrMagnitude > 0.1f)
         {
-            isFacingRight = _rb.velocity.x > 0;
+            _isFacingRight = _rb.velocity.x > 0;
         }
 
-        FacePlayerInDirection(faceRight: isFacingRight);
+        FacePlayerInDirection(faceRight: _isFacingRight);
     }
 
     private void FacePlayerInDirection(bool faceRight)

@@ -46,7 +46,8 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool isAlive = true;
     [SerializeField] Collider2D _playerSpriteCollider;
     [SerializeField] LayerMask _pickUpLayerMask;
-    [SerializeField] ParticleSystem _bloodParticles;
+    [SerializeField] ParticleSystem _bloodPS;
+    [SerializeField] ParticleSystem _dustPS;
     [SerializeField] GameObject _gameOverUIObject;
     [SerializeField] float _uprightTorque;
     private Vector2 _originalTouchScreenPos;
@@ -132,7 +133,7 @@ public class PlayerController : MonoBehaviour
 
         if (emitBlood)
         {
-            _bloodParticles.Play();
+            _bloodPS.Play();
         }
 
         if (_gameOverUIObject)
@@ -210,6 +211,11 @@ public class PlayerController : MonoBehaviour
                     break;
             }
         }
+    }
+
+    private void CreateDust()
+    {
+        _dustPS.Play();
     }
 
     private void KeepPlayerUpright()
@@ -313,6 +319,8 @@ public class PlayerController : MonoBehaviour
 
         // If the player was grabbing a wall, we want to stop limiting y velocity so that he can jump upwards
         _limitVelocityOnWallGrabbing = false;
+
+        CreateDust();
     }
 
     private Vector2 CalculatePointPosition(float t, Vector2 direction, float jumpPower)
@@ -443,6 +451,7 @@ public class PlayerController : MonoBehaviour
         {
             _touchedGrabbableWalls.Add(collision.gameObject);
             _isGrabbingWall = true;
+            CreateDust();
         }
     }
 

@@ -7245,25 +7245,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lava Root
       objectReference: {fileID: 0}
-    - target: {fileID: 8555244384476278299, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8555244384476278372, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8555244384476278372, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.48795095
+      value: 0.50747
       objectReference: {fileID: 0}
     - target: {fileID: 8555244384476278372, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.19583467
+      value: -0.46
       objectReference: {fileID: 0}
     - target: {fileID: 8555244384476278372, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 93.13259
+      value: 96.858
       objectReference: {fileID: 0}
     - target: {fileID: 8555244384476278372, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7293,9 +7289,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8555244384635908347, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: cd47be4995c81d64aab3dde22b714615, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}

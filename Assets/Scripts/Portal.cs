@@ -20,6 +20,11 @@ public class Portal : MonoBehaviour
         }
     }
 
+    public void FinishExit()
+    {
+        Destroy(gameObject);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         int otherLayer = collision.gameObject.layer;

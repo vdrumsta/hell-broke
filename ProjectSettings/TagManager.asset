@@ -83,6 +83,9 @@ TagManager:
   - name: Enemy
     uniqueID: 1539948147
     locked: 0
+  - name: Portal
+    uniqueID: 2800080523
+    locked: 0
   - name: LavaSmoke
     uniqueID: 882088489
     locked: 0

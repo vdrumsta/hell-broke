@@ -4949,7 +4949,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b57423c80acb464bb592ed21d872ae4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _exitPortal: 1
+  _exitPortal: 0
   _playerLayer:
     serializedVersion: 2
     m_Bits: 256

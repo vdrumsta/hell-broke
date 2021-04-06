@@ -7,6 +7,7 @@ using UnityEngine;
 
 using Debug = UnityEngine.Debug;
 
+[RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
     [Header("Jump")]

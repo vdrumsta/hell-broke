@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class EnemyBatScript : EnemyScript
 {
     [SerializeField] private float _flySpeed;
@@ -11,7 +12,7 @@ public class EnemyBatScript : EnemyScript
     [SerializeField] private float _distanceToActivate; // Distance to player before activating
     [SerializeField] private float _playerStunTime = 1f;
 
-
+    private Animator _anim;
     private Rigidbody2D _rb;
     private GameObject _playerRef;
     private PlayerController _playerController;
@@ -20,6 +21,7 @@ public class EnemyBatScript : EnemyScript
 
     void Start()
     {
+        _anim = GetComponent<Animator>();
         _rb = GetComponent<Rigidbody2D>();
         _playerController = FindObjectOfType<PlayerController>();
         _playerRef = _playerController.gameObject;
@@ -29,39 +31,56 @@ public class EnemyBatScript : EnemyScript
     {
         if (!_playerRef || _isDead) return;
 
+        if (!_foundPlayer)
+        {
+            LookForPlayer();
+        }
+        else
+        {
+            MoveTowardsPlayer();
+        }
+    }
+
+    private void LookForPlayer()
+    {
         if (!_foundPlayer && Vector2.Distance(transform.position, _playerRef.transform.position) < _distanceToActivate)
         {
             _foundPlayer = true;
 
+            _anim.SetBool("isAttacking", true);
+
             // Add initial force to get the rigidbody up to speed
             _rb.AddForce(GetPlayerDirection() * _flySpeed * 2, ForceMode2D.Impulse);
         }
+    }
 
-        if (_foundPlayer)
+    private void MoveTowardsPlayer()
+    {
+        Vector2 directionToPlayer = GetPlayerDirection();
+
+        // Add continuous force towards player
+        _rb.AddForce(directionToPlayer * _flySpeed, ForceMode2D.Force);
+
+        // Add corrective force so that the enemy doesn't 'orbit' around the player 
+        Vector2 correctiveDirection = Vector2.zero;
+        if (Vector3.Cross(directionToPlayer, _rb.velocity.normalized).z > 0)
         {
-            Vector2 directionToPlayer = GetPlayerDirection();
-
-            // Add continuous force towards player
-            _rb.AddForce(directionToPlayer * _flySpeed, ForceMode2D.Force);
-
-            // Add corrective force so that the enemy doesn't 'orbit' around the player 
-            Vector2 correctiveDirection = Vector2.zero;
-            if (Vector3.Cross(directionToPlayer, _rb.velocity.normalized).z > 0)
-            {
-                correctiveDirection = Utils2D.PerpendicularClockwise(directionToPlayer);
-            }
-            else
-            {
-                correctiveDirection = Utils2D.PerpendicularCounterClockwise(directionToPlayer);
-            }
-            
-            _rb.AddForce(correctiveDirection, ForceMode2D.Force);
+            correctiveDirection = Utils2D.PerpendicularClockwise(directionToPlayer);
         }
+        else
+        {
+            correctiveDirection = Utils2D.PerpendicularCounterClockwise(directionToPlayer);
+        }
+
+        _rb.AddForce(correctiveDirection, ForceMode2D.Force);
     }
 
     public override void Die(Vector2 knockbackDirection)
     {
         _isDead = true;
+
+        _anim.SetBool("isAttacking", false);
+
         _rb.constraints = RigidbodyConstraints2D.None;
         _rb.AddForce(knockbackDirection * _dieKnockbackSpeed, ForceMode2D.Impulse);
 

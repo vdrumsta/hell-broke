@@ -2205,30 +2205,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelLoader
       objectReference: {fileID: 0}
-    - target: {fileID: 902824880403773506, guid: d97f41c96b19fa64fb36391818a2e424, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-    - target: {fileID: 902824880403773506, guid: d97f41c96b19fa64fb36391818a2e424, type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 902824880403773506, guid: d97f41c96b19fa64fb36391818a2e424, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 902824880403773506, guid: d97f41c96b19fa64fb36391818a2e424, type: 3}
-      propertyPath: m_Color.r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4147638336161820654, guid: d97f41c96b19fa64fb36391818a2e424, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4561211284472580928, guid: d97f41c96b19fa64fb36391818a2e424, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4973255179728645453, guid: d97f41c96b19fa64fb36391818a2e424, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -2277,14 +2253,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
-    - target: {fileID: 8572135290702945870, guid: d97f41c96b19fa64fb36391818a2e424, type: 3}
-      propertyPath: m_RenderMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8572135290702945870, guid: d97f41c96b19fa64fb36391818a2e424, type: 3}
-      propertyPath: m_SortingLayerID
-      value: 1947620085
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d97f41c96b19fa64fb36391818a2e424, type: 3}
 --- !u!1001 &719804409

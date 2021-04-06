@@ -281,7 +281,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 882088489
-  m_SortingLayer: 15
+  m_SortingLayer: 17
   m_SortingOrder: 200
   m_Sprite: {fileID: 7482667652216324306, guid: db750325989564987a34393247d883b4, type: 3}
   m_Color: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 0.62352943}
@@ -307,6 +307,7 @@ GameObject:
   - component: {fileID: 8555244384635908346}
   - component: {fileID: 8555244384635908293}
   - component: {fileID: 8555244384635908294}
+  - component: {fileID: 49685636}
   m_Layer: 11
   m_Name: Lava
   m_TagString: Untagged
@@ -367,8 +368,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 620771325
-  m_SortingLayer: 17
-  m_SortingOrder: 201
+  m_SortingLayer: 19
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: cd47be4995c81d64aab3dde22b714615, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -435,10 +436,31 @@ BuoyancyEffector2D:
   m_ColliderMask:
     serializedVersion: 2
     m_Bits: 8448
-  m_SurfaceLevel: 0.5
-  m_Density: 5
-  m_LinearDrag: 5
+  m_SurfaceLevel: 0.53
+  m_Density: 10
+  m_LinearDrag: 20
   m_AngularDrag: 5
   m_FlowAngle: 0
   m_FlowMagnitude: 0
   m_FlowVariation: 0
+--- !u!50 &49685636
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8555244384635908345}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

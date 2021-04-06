@@ -12,6 +12,7 @@ public class EnemyBatScript : EnemyScript
     [SerializeField] private float _distanceToActivate; // Distance to player before activating
     [SerializeField] private float _playerStunTime = 1f;
 
+    BreakApartScript _breakScript;
     private Animator _anim;
     private Rigidbody2D _rb;
     private GameObject _playerRef;
@@ -23,6 +24,7 @@ public class EnemyBatScript : EnemyScript
     {
         _anim = GetComponent<Animator>();
         _rb = GetComponent<Rigidbody2D>();
+        _breakScript = GetComponent<BreakApartScript>();
         _playerController = FindObjectOfType<PlayerController>();
         _playerRef = _playerController.gameObject;
     }
@@ -75,26 +77,35 @@ public class EnemyBatScript : EnemyScript
         _rb.AddForce(correctiveDirection, ForceMode2D.Force);
     }
 
-    public override void Die(Vector2 knockbackDirection)
+    public override void Die(Vector2 knockbackDirection, bool breakApart)
     {
         _isDead = true;
-
         _anim.SetBool("isAttacking", false);
 
-        _rb.constraints = RigidbodyConstraints2D.None;
-        _rb.AddForce(knockbackDirection * _dieKnockbackSpeed, ForceMode2D.Impulse);
-
-        // If knockbacked left, then spin left
-        float torqueForce = knockbackDirection.x > 0 ? -_dieTorqueSpeed : _dieTorqueSpeed;
-        _rb.AddTorque(torqueForce, ForceMode2D.Impulse);
-        _rb.gravityScale = 1f;
-
-        // Disable collision between the player and the bat
-        var batCollider = GetComponent<Collider2D>();
-        var playerColliders = _playerRef.GetComponents<Collider2D>();
-        foreach(var playerCollider in playerColliders)
+        if (breakApart)
         {
-            Physics2D.IgnoreCollision(batCollider, playerCollider);
+            _breakScript?.BreakApart(knockbackDirection);
+            // Disable collision between the player and the bat
+            var batCollider = GetComponent<Collider2D>();
+            batCollider.enabled = false;
+        }
+        else
+        {
+            _rb.constraints = RigidbodyConstraints2D.None;
+            _rb.AddForce(knockbackDirection * _dieKnockbackSpeed, ForceMode2D.Impulse);
+
+            // If knockbacked left, then spin left
+            float torqueForce = knockbackDirection.x > 0 ? -_dieTorqueSpeed : _dieTorqueSpeed;
+            _rb.AddTorque(torqueForce, ForceMode2D.Impulse);
+            _rb.gravityScale = 1f;
+
+            // Disable collision between the player and the bat
+            var batCollider = GetComponent<Collider2D>();
+            var playerColliders = _playerRef.GetComponents<Collider2D>();
+            foreach (var playerCollider in playerColliders)
+            {
+                Physics2D.IgnoreCollision(batCollider, playerCollider);
+            }
         }
     }
 

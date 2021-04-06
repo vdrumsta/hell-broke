@@ -22,7 +22,7 @@ public class BulletScript : MonoBehaviour
             Vector2 knockbackDirection = _rb.velocity.normalized;
 
             var enemyScript = collision.GetComponent<EnemyScript>();
-            enemyScript?.Die(knockbackDirection);
+            enemyScript?.Die(knockbackDirection, true);
         }
 
         Destroy(gameObject);

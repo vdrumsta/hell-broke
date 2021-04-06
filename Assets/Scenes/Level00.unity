@@ -6677,13 +6677,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 270592159, guid: 339c89291d9dbc041b210683ec494e2c, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509410488, guid: 339c89291d9dbc041b210683ec494e2c, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598134012, guid: 339c89291d9dbc041b210683ec494e2c, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859910740, guid: 339c89291d9dbc041b210683ec494e2c, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 772554606108789913, guid: 339c89291d9dbc041b210683ec494e2c, type: 3}
       propertyPath: m_RootOrder
       value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 772554606108789913, guid: 339c89291d9dbc041b210683ec494e2c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.653
+      value: -0.673
       objectReference: {fileID: 0}
     - target: {fileID: 772554606108789913, guid: 339c89291d9dbc041b210683ec494e2c, type: 3}
       propertyPath: m_LocalPosition.y

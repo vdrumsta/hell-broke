@@ -2661,10 +2661,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2075307021}
     m_Modifications:
-    - target: {fileID: 3890210001347663033, guid: c27bab22ea88948418fa8f6a71589186, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 6200000, guid: 7eaa9811692a97f45802497a43475640, type: 2}
     - target: {fileID: 3890210001347663036, guid: c27bab22ea88948418fa8f6a71589186, type: 3}
       propertyPath: m_Name
       value: BreakableBlock (2)
@@ -2675,7 +2671,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3890210001347663038, guid: c27bab22ea88948418fa8f6a71589186, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.71
+      value: -1.788
       objectReference: {fileID: 0}
     - target: {fileID: 3890210001347663038, guid: c27bab22ea88948418fa8f6a71589186, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3785,10 +3781,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2075307021}
     m_Modifications:
-    - target: {fileID: 3890210001347663033, guid: c27bab22ea88948418fa8f6a71589186, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 6200000, guid: 7eaa9811692a97f45802497a43475640, type: 2}
     - target: {fileID: 3890210001347663036, guid: c27bab22ea88948418fa8f6a71589186, type: 3}
       propertyPath: m_Name
       value: BreakableBlock (3)
@@ -3799,7 +3791,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3890210001347663038, guid: c27bab22ea88948418fa8f6a71589186, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.71
+      value: -1.788
       objectReference: {fileID: 0}
     - target: {fileID: 3890210001347663038, guid: c27bab22ea88948418fa8f6a71589186, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5963,10 +5955,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2075307021}
     m_Modifications:
-    - target: {fileID: 3890210001347663033, guid: c27bab22ea88948418fa8f6a71589186, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 6200000, guid: 7eaa9811692a97f45802497a43475640, type: 2}
     - target: {fileID: 3890210001347663036, guid: c27bab22ea88948418fa8f6a71589186, type: 3}
       propertyPath: m_Name
       value: BreakableBlock (1)
@@ -5977,7 +5965,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3890210001347663038, guid: c27bab22ea88948418fa8f6a71589186, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.71
+      value: -1.788
       objectReference: {fileID: 0}
     - target: {fileID: 3890210001347663038, guid: c27bab22ea88948418fa8f6a71589186, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6850,11 +6838,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8119357878049651307, guid: d82aa1955eb0449459977c84e92ec80c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.904
+      value: 0.078
       objectReference: {fileID: 0}
     - target: {fileID: 8119357878049651307, guid: d82aa1955eb0449459977c84e92ec80c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.677
+      value: -2.599
       objectReference: {fileID: 0}
     - target: {fileID: 8119357878049651307, guid: d82aa1955eb0449459977c84e92ec80c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6960,11 +6948,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2326295354650343537, guid: de020ccc556115046bc8aa4072d4274d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.71000004
+      value: 0.827
       objectReference: {fileID: 0}
     - target: {fileID: 2326295354650343537, guid: de020ccc556115046bc8aa4072d4274d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.6199999
+      value: 1.063
       objectReference: {fileID: 0}
     - target: {fileID: 2326295354650343537, guid: de020ccc556115046bc8aa4072d4274d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7068,10 +7056,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2075307021}
     m_Modifications:
-    - target: {fileID: 3890210001347663033, guid: c27bab22ea88948418fa8f6a71589186, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 6200000, guid: 7eaa9811692a97f45802497a43475640, type: 2}
     - target: {fileID: 3890210001347663036, guid: c27bab22ea88948418fa8f6a71589186, type: 3}
       propertyPath: m_Name
       value: BreakableBlock
@@ -7082,7 +7066,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3890210001347663038, guid: c27bab22ea88948418fa8f6a71589186, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.71
+      value: -1.788
       objectReference: {fileID: 0}
     - target: {fileID: 3890210001347663038, guid: c27bab22ea88948418fa8f6a71589186, type: 3}
       propertyPath: m_LocalPosition.y

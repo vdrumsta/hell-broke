@@ -47,6 +47,9 @@ TagManager:
   - name: Platform-basic
     uniqueID: 526737469
     locked: 0
+  - name: Platform-unbreakable
+    uniqueID: 636937689
+    locked: 0
   - name: Platform-breakable
     uniqueID: 372848747
     locked: 0

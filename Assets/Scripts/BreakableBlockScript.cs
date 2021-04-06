@@ -8,16 +8,7 @@ public class BreakableBlockScript : MonoBehaviour
     [SerializeField] GameObject[] _breakablePieces;
     [SerializeField] LayerMask _bulletLayerMask;
     [SerializeField] float _breakApartForce = 1f;
-    
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
+    [SerializeField] float _breakApartDirectionVariance = 2f;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -47,9 +38,13 @@ public class BreakableBlockScript : MonoBehaviour
             var rb = piece.GetComponent<Rigidbody2D>();
             if (!rb) continue;
 
-            // add force to them in the opposite direction with slight variance
+            // Add force to them in the opposite direction with slight variance
             float randomForceVariance = _breakApartForce * Random.Range(0f, 0.2f);
-            rb.AddForce(direction * (_breakApartForce + randomForceVariance), ForceMode2D.Impulse);
+
+            var directionAngleVariance = Random.Range(-_breakApartDirectionVariance, _breakApartDirectionVariance);
+            var newDirection = Quaternion.AngleAxis(directionAngleVariance, Vector3.forward) * direction;
+
+            rb.AddForce(newDirection * (_breakApartForce + randomForceVariance), ForceMode2D.Impulse);
         }
 
         // disable self. does it still destroy after disable?

@@ -23,7 +23,10 @@ public class Portal : MonoBehaviour
 
     public void FinishExit()
     {
-        _winUI?.SetActive(true);
+        if (_winUI && _exitPortal)
+        {
+            _winUI.SetActive(true);
+        }
         Destroy(gameObject);
     }
 

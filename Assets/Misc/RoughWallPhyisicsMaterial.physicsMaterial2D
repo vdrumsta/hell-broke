@@ -6,6 +6,6 @@ PhysicsMaterial2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: UnbreakableBlockPhysicsMaterial
+  m_Name: RoughWallPhyisicsMaterial
   friction: 100
   bounciness: 0

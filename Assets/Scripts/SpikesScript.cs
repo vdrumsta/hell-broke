@@ -26,6 +26,26 @@ public class SpikesScript : MonoBehaviour
             _playerScript = collision.GetComponent<PlayerController>();
             // Animation triggers
             _anim.SetTrigger("activateSpikes");
+            Debug.Log("triggering spike");
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        int otherLayer = collision.gameObject.layer;
+
+        // If player touches the spikes, then activate the spikes
+        if ((_playerLayerMask & 1 << otherLayer) != 0)
+        {
+            if (!_playerScript)
+            {
+                _playerScript = collision.GetComponent<PlayerController>();
+            }
+
+            if (!_anim.GetBool("IsActivated"))
+            {
+                _anim.SetBool("IsActivated", true);
+            }
         }
     }
 
@@ -45,5 +65,10 @@ public class SpikesScript : MonoBehaviour
                 Debug.LogError("Couldn't retrieve player script to kill him with spikes");
             }
         }
+    }
+
+    public void DeactivateSpike()
+    {
+        _anim.SetBool("IsActivated", false);
     }
 }

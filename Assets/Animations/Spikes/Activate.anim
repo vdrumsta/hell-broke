@@ -318,7 +318,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.85
+  - time: 1.8333334
     functionName: DeactivateSpike
     data: 
     objectReferenceParameter: {fileID: 0}

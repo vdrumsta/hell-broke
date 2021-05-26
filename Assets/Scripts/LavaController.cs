@@ -12,21 +12,34 @@ public class LavaController : MonoBehaviour
     [SerializeField] private float _warmUpTime;
     [SerializeField] private AnimationCurve _warmUpSpeedCurve;
     [SerializeField] private float _riseSpeed;
+    [SerializeField] private Transform _topLavaPoint;
     [SerializeField] private LayerMask _lavaLayerMask;
     
     private Stopwatch _lavaWarmUpTimer;
+    private Camera _mainCamera;
 
     private void Start()
     {
         _lavaWarmUpTimer = Stopwatch.StartNew();
+        _mainCamera = Camera.main;
     }
 
     void Update()
     {
-        if (isRising)
+        if (isRising && !isLavaAboveScreen())
         {
             RiseLava();
         }
+    }
+
+    private bool isLavaAboveScreen()
+    {
+        if (!_mainCamera)
+        {
+            Debug.LogWarning("No camera found to check top lava point against");
+        }
+
+        return _mainCamera.WorldToViewportPoint(_topLavaPoint.position).y > 1;
     }
 
     private void RiseLava()

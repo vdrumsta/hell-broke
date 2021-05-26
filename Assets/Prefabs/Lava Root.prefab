@@ -420,6 +420,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _riseSpeed: 1
+  _topLavaPoint: {fileID: 9136810626940494514}
   _lavaLayerMask:
     serializedVersion: 2
     m_Bits: 8448

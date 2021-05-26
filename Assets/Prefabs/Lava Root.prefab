@@ -324,7 +324,7 @@ Transform:
   m_GameObject: {fileID: 8555244384635908345}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.48795095, y: -8.324165, z: -93.13259}
-  m_LocalScale: {x: 5.7804174, y: 8.469969, z: 1.6169}
+  m_LocalScale: {x: 5.7804174, y: 10.905085, z: 1.6169}
   m_Children:
   - {fileID: 3679018240736441937}
   m_Father: {fileID: 8555244384476278372}
@@ -393,7 +393,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36edaaacba436344d8e888171912b276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isRising: 0
+  isRising: 1
+  _warmUpTime: 5
+  _warmUpSpeedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   _riseSpeed: 1
   _lavaLayerMask:
     serializedVersion: 2

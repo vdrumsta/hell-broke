@@ -6617,7 +6617,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8555244384476278372, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.46
+      value: -2.05
       objectReference: {fileID: 0}
     - target: {fileID: 8555244384476278372, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6650,6 +6650,38 @@ PrefabInstance:
     - target: {fileID: 8555244384476278372, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8555244384635908292, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 10.905085
+      objectReference: {fileID: 0}
+    - target: {fileID: 8555244384635908346, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
+      propertyPath: isRising
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8555244384635908346, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
+      propertyPath: _warmUpTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8555244384635908346, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
+      propertyPath: _warmUpSpeedCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8555244384635908346, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
+      propertyPath: _warmUpSpeedCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8555244384635908346, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
+      propertyPath: _warmUpSpeedCurve.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8555244384635908346, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
+      propertyPath: _warmUpSpeedCurve.m_Curve.Array.data[1].inSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8555244384635908346, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
+      propertyPath: _warmUpSpeedCurve.m_Curve.Array.data[1].outSlope
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}

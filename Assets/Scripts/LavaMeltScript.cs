@@ -37,6 +37,7 @@ public class LavaMeltScript : MonoBehaviour
     /// </summary>
     private void ProcessBurnTick()
     {
+        bool burnedUp = false;
         foreach(Material mat in _materials)
         {
             if (!mat) continue;
@@ -45,6 +46,18 @@ public class LavaMeltScript : MonoBehaviour
             newFadeValue -= _burnSpeed * Time.deltaTime;
             newFadeValue = Mathf.Clamp01(newFadeValue);
             mat.SetFloat("_Fade", newFadeValue);
+
+            burnedUp = newFadeValue <= 0 ? true : false;
+        }
+
+        if (burnedUp) 
+        {
+            Rigidbody2D rb = GetComponent<Rigidbody2D>();
+
+            if (rb != null)
+            {
+                rb.simulated = false;
+            }
         }
     }
 }

@@ -700,6 +700,9 @@ MonoBehaviour:
   _dieTorqueSpeed: 0.2
   _distanceToActivate: 3
   _playerStunTime: 3
+  _pathRaycastMask:
+    serializedVersion: 2
+    m_Bits: 4260096
 --- !u!50 &772554606108789912
 Rigidbody2D:
   serializedVersion: 4

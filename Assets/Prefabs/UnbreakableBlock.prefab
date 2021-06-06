@@ -440,6 +440,7 @@ GameObject:
   - component: {fileID: 2326295354650343543}
   - component: {fileID: 2326295354650343542}
   - component: {fileID: 5590282256331363113}
+  - component: {fileID: 2396859944439418120}
   m_Layer: 22
   m_Name: UnbreakableBlock
   m_TagString: Untagged
@@ -596,6 +597,32 @@ CompositeCollider2D:
       - {x: -0.24994141, y: -0.25}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
+--- !u!61 &2396859944439418120
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2326295354650343539}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 2ff313c57c7186d4da1d2c8a023ea5fd, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.2}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.5, y: 0.5}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.4, y: 0.1}
+  m_EdgeRadius: 0
 --- !u!1 &2326295355112702999
 GameObject:
   m_ObjectHideFlags: 0

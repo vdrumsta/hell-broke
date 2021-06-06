@@ -11,6 +11,7 @@ public class EnemyBatScript : EnemyScript
     [SerializeField] private float _dieTorqueSpeed;
     [SerializeField] private float _distanceToActivate; // Distance to player before activating
     [SerializeField] private float _playerStunTime = 1f;
+    [SerializeField] private LayerMask _pathRaycastMask;
 
     BreakApartScript _breakScript;
     private Animator _anim;
@@ -45,15 +46,23 @@ public class EnemyBatScript : EnemyScript
 
     private void LookForPlayer()
     {
-        if (!_foundPlayer && Vector2.Distance(transform.position, _playerRef.transform.position) < _distanceToActivate)
-        {
-            _foundPlayer = true;
+        // Check if already found the player
+        if (_foundPlayer) return;
 
-            _anim.SetBool("isAttacking", true);
+        // Check if player is out of range
+        if (Vector2.Distance(transform.position, _playerRef.transform.position) > _distanceToActivate) return;
 
-            // Add initial force to get the rigidbody up to speed
-            _rb.AddForce(GetPlayerDirection() * _flySpeed * 2, ForceMode2D.Impulse);
-        }
+        // Check if the path is unobstructed
+        Vector2 directionToPlayer = _playerRef.transform.position - transform.position;
+        RaycastHit2D raycastResult = Physics2D.Raycast(transform.position, directionToPlayer, _distanceToActivate, _pathRaycastMask);
+        if (raycastResult.collider != null && raycastResult.collider.gameObject.layer != _playerRef.layer) return;
+
+        _foundPlayer = true;
+
+        _anim.SetBool("isAttacking", true);
+
+        // Add initial force to get the rigidbody up to speed
+        _rb.AddForce(GetPlayerDirection() * _flySpeed * 2, ForceMode2D.Impulse);
     }
 
     private void MoveTowardsPlayer()

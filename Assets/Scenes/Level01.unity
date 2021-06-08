@@ -2283,11 +2283,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d492a7be264d1a8478b705b4d9012c17, type: 3}
---- !u!1 &792308751 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3162097540839824774, guid: e55c63afba828294a8f577d352aed6e9, type: 3}
-  m_PrefabInstance: {fileID: 1733544946}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &829449473 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3098043593602470166, guid: 3c676cfc9ad8e324199531c370d24ae3, type: 3}
@@ -4726,6 +4721,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1927210710833942269, guid: e55c63afba828294a8f577d352aed6e9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2274023990076718718, guid: e55c63afba828294a8f577d352aed6e9, type: 3}
       propertyPath: m_Name
       value: PanelMain
@@ -4813,6 +4812,30 @@ PrefabInstance:
     - target: {fileID: 2274023990076718719, guid: e55c63afba828294a8f577d352aed6e9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2851939802300244974, guid: e55c63afba828294a8f577d352aed6e9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3678531392110012684, guid: e55c63afba828294a8f577d352aed6e9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 714890886}
+    - target: {fileID: 3678531392110012684, guid: e55c63afba828294a8f577d352aed6e9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GotoMainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 6010451259251643517, guid: e55c63afba828294a8f577d352aed6e9, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6940021366689559228, guid: e55c63afba828294a8f577d352aed6e9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 714890886}
+    - target: {fileID: 6940021366689559228, guid: e55c63afba828294a8f577d352aed6e9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GotoLevel
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e55c63afba828294a8f577d352aed6e9, type: 3}
@@ -6063,7 +6086,7 @@ PrefabInstance:
     - target: {fileID: 8062448052919946682, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
       propertyPath: _gameOverUIObject
       value: 
-      objectReference: {fileID: 792308751}
+      objectReference: {fileID: 0}
     - target: {fileID: 8062448052919946682, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
       propertyPath: _grabbableWallMask.m_Bits
       value: 6356992

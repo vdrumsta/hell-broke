@@ -2868,6 +2868,10 @@ PrefabInstance:
       value: 33024
       objectReference: {fileID: 0}
     - target: {fileID: 8555244384635908346, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
+      propertyPath: isRising
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8555244384635908346, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
       propertyPath: _lavaLayerMask.m_Bits
       value: 33024
       objectReference: {fileID: 0}

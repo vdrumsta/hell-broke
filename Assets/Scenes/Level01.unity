@@ -1153,6 +1153,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d492a7be264d1a8478b705b4d9012c17, type: 3}
+--- !u!1 &483581876 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1927210710833942269, guid: e55c63afba828294a8f577d352aed6e9, type: 3}
+  m_PrefabInstance: {fileID: 1733544946}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &486657848
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6086,7 +6091,7 @@ PrefabInstance:
     - target: {fileID: 8062448052919946682, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
       propertyPath: _gameOverUIObject
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 483581876}
     - target: {fileID: 8062448052919946682, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
       propertyPath: _grabbableWallMask.m_Bits
       value: 6356992
@@ -6208,6 +6213,10 @@ PrefabInstance:
     - target: {fileID: 8555244384476278372, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8555244384635908346, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}
+      propertyPath: isRising
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2c6e8c673722614d808a31113b92ac8, type: 3}

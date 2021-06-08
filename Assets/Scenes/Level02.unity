@@ -5052,6 +5052,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2274023990076718719, guid: e55c63afba828294a8f577d352aed6e9, type: 3}
   m_PrefabInstance: {fileID: 1733544946}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1733544948 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1927210710833942269, guid: e55c63afba828294a8f577d352aed6e9, type: 3}
+  m_PrefabInstance: {fileID: 1733544946}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1736012790
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6548,7 +6553,7 @@ PrefabInstance:
     - target: {fileID: 8062448052919946682, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
       propertyPath: _gameOverUIObject
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1733544948}
     - target: {fileID: 8062448052919946682, guid: 4d6c3e6466e1af645856ef736a0811f8, type: 3}
       propertyPath: _grabbableWallMask.m_Bits
       value: 6356992

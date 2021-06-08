@@ -9,11 +9,13 @@ public class LavaMeltScript : MonoBehaviour
 
     private bool _isBurning;
     private Material[] _materials;
+    private PlayerController _playerScript;
 
     void Start()
     {
         var spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
         _materials = spriteRenderers.Select(t => t.material).ToArray();
+        _playerScript = GetComponent<PlayerController>();
     }
 
     void Update()
@@ -29,6 +31,12 @@ public class LavaMeltScript : MonoBehaviour
         if (!_isBurning)
         {
             _isBurning = true;
+
+            // if LavaMeltScript is attached on the player, then we want to trigger game over
+            if (_playerScript)
+            {
+                _playerScript.KillPlayer();
+            }
         }
     }
 

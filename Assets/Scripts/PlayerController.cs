@@ -139,11 +139,21 @@ public class PlayerController : MonoBehaviour
 
         if (_gameOverUIObject)
         {
-            _gameOverUIObject.SetActive(true);
+            StartCoroutine(DisplayGameOver(1.0f)); 
+            
         }
         else
         {
             Debug.LogError("Cant activate game over panel because the reference is null");
+        }
+    }
+
+    IEnumerator DisplayGameOver(float waitTime)
+    {
+        while (true) // Do this as long this script is running.
+        {
+            yield return new WaitForSeconds(waitTime);
+            _gameOverUIObject.SetActive(true);
         }
     }
 

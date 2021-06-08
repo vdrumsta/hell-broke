@@ -7,7 +7,6 @@ public class Portal : MonoBehaviour
 {
     [SerializeField] private bool _exitPortal = true;
     [SerializeField] private LayerMask _playerLayer;
-    [SerializeField] private GameObject _winUI;
 
     private Animator _anim;
 
@@ -23,9 +22,13 @@ public class Portal : MonoBehaviour
 
     public void FinishExit()
     {
-        if (_winUI && _exitPortal)
+        if (_exitPortal)
         {
-            _winUI.SetActive(true);
+            ScoreMng uiController = FindObjectOfType<ScoreMng>();
+            if (uiController)
+            {
+                uiController.GameWin();
+            }
         }
         Destroy(gameObject);
     }

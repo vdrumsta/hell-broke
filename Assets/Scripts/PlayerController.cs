@@ -49,7 +49,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask _pickUpLayerMask;
     [SerializeField] ParticleSystem _bloodPS;
     [SerializeField] ParticleSystem _dustPS;
-    [SerializeField] GameObject _gameOverUIObject;
     [SerializeField] float _uprightTorque;
     private Vector2 _originalTouchScreenPos;
     private bool _isFacingRight;
@@ -64,6 +63,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D _rb;
     private Animator _anim;
+    private ScoreMng _uiController;
 
     void Start()
     {
@@ -74,6 +74,7 @@ public class PlayerController : MonoBehaviour
 
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
+        _uiController = FindObjectOfType<ScoreMng>();
 
         CreateTrajectoryPoints();
     }
@@ -137,23 +138,9 @@ public class PlayerController : MonoBehaviour
             _bloodPS.Play();
         }
 
-        if (_gameOverUIObject)
+        if (_uiController)
         {
-            StartCoroutine(DisplayGameOver(1.0f)); 
-            
-        }
-        else
-        {
-            Debug.LogError("Cant activate game over panel because the reference is null");
-        }
-    }
-
-    IEnumerator DisplayGameOver(float waitTime)
-    {
-        while (true) // Do this as long this script is running.
-        {
-            yield return new WaitForSeconds(waitTime);
-            _gameOverUIObject.SetActive(true);
+            _uiController.GameOver();
         }
     }
 

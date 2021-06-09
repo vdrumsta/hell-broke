@@ -83,12 +83,6 @@ public class ScoreMng : MonoBehaviour
 
         string timerDisplayString = "<mspace=120.00>";  // Add monospacing
 
-        int minutes = LevelTimer.Elapsed.Minutes;
-        if (minutes > 0)
-        {
-            timerDisplayString += minutes + ":";
-        }
-
         int DoubleDigitMilliseconds = LevelTimer.Elapsed.Milliseconds / 10;
         timerDisplayString += LevelTimer.Elapsed.Seconds + ":" + DoubleDigitMilliseconds.ToString("D2") + "</mspace>";
         return timerDisplayString;

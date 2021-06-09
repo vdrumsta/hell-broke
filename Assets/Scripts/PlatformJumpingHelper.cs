@@ -40,7 +40,7 @@ public class PlatformJumpingHelper : MonoBehaviour
         var collider = collision.collider;
 
         if ((_platformLayer & 1 << collider.gameObject.layer) != 0 // Check if the other collider is part of platform layer
-            && !_helpedPlatforms.Contains(collider) && !_playerController._isGrabbingWall && _playerController.isAlive)
+            && !_helpedPlatforms.Contains(collider) && !_playerController.IsGrabbingWall && _playerController.isAlive)
         {
             var topOfPlatformYCoord = collider.bounds.max.y;
             var playerColliderCenterPos = collision.otherCollider.bounds.center;

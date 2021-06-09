@@ -7,7 +7,7 @@ using Debug = UnityEngine.Debug;
 
 public class LavaController : MonoBehaviour
 {
-    public bool isRising;
+    public bool IsRising;
 
     [SerializeField] private float _warmUpTime;
     [SerializeField] private AnimationCurve _warmUpSpeedCurve;
@@ -25,7 +25,7 @@ public class LavaController : MonoBehaviour
 
     void Update()
     {
-        if (isRising && !isLavaAboveScreen())
+        if (IsRising && !isLavaAboveScreen())
         {
             RiseLava();
         }
@@ -33,8 +33,26 @@ public class LavaController : MonoBehaviour
 
     public void StartRising()
     {
-        isRising = true;
-        _lavaWarmUpTimer = Stopwatch.StartNew();
+        IsRising = true;
+
+        if (_lavaWarmUpTimer == null)
+        {
+            _lavaWarmUpTimer = Stopwatch.StartNew();
+        }
+        else
+        {
+            _lavaWarmUpTimer.Start();
+        }
+    }
+
+    public void StopRising()
+    {
+        IsRising = false;
+
+        if (_lavaWarmUpTimer != null)
+        {
+            _lavaWarmUpTimer.Stop();
+        }
     }
 
     private bool isLavaAboveScreen()
@@ -64,6 +82,7 @@ public class LavaController : MonoBehaviour
         newPos.y += currentRiseSpeed * Time.deltaTime;
         transform.position = newPos;
     }
+
 
     void OnTriggerEnter2D(Collider2D other)
     {

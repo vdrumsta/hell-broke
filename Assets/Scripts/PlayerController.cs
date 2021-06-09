@@ -16,13 +16,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask _groundLayerMask;
     [SerializeField] float _groundedCheckHeight = 1f;
     [SerializeField] float _dragDistanceForSwipe = 25f;
-    private bool _isGrounded;
+    public bool IsGrounded;
     private bool _isJumpTouch;
     private bool _playerHasJumpedOnce;
 
     [Header("Wall Grab")]
     [SerializeField] LayerMask _grabbableWallMask;
-    public bool _isGrabbingWall;
+    public bool IsGrabbingWall;
     private bool _limitVelocityOnWallGrabbing;
     private List<GameObject> _touchedGrabbableWalls;
 
@@ -82,9 +82,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        _isGrounded = IsPlayerGrounded();
+        IsGrounded = IsPlayerGrounded();
 
-        if (_isGrounded && _rb.velocity.y < 0.1f)
+        if (IsGrounded && _rb.velocity.y < 0.1f)
         {
             //_rb.velocity = new Vector2(0, _rb.velocity.y);
         }
@@ -269,7 +269,7 @@ public class PlayerController : MonoBehaviour
 
     private bool isViableJump()
     {
-        return _isJumpTouch && (_isGrounded || _isGrabbingWall) && !_isStunned;
+        return _isJumpTouch && (IsGrounded || IsGrabbingWall) && !_isStunned;
     }
 
     private void SetTrajectoryPointsActiveState(bool state)
@@ -293,7 +293,7 @@ public class PlayerController : MonoBehaviour
     /// <param name="currentTouchPos"></param>
     private bool CheckIfSwipeIsJump(Touch currentTouch)
     {
-        if (!_isJumpTouch && !_isStunned && (_isGrounded || _isGrabbingWall) && currentTouch.phase != TouchPhase.Began)
+        if (!_isJumpTouch && !_isStunned && (IsGrounded || IsGrabbingWall) && currentTouch.phase != TouchPhase.Began)
         {
             float fingerMoveDistance = Vector2.Distance(currentTouch.position, _originalTouchScreenPos);
             
@@ -368,7 +368,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void UpdatePlayerFacingDirection()
     {
-        if (_isGrabbingWall && _touchedGrabbableWalls.Count > 0)
+        if (IsGrabbingWall && _touchedGrabbableWalls.Count > 0)
         {
             _isFacingRight = _touchedGrabbableWalls[0].transform.position.x < transform.position.x;
         }
@@ -402,7 +402,7 @@ public class PlayerController : MonoBehaviour
     {
         if (_touchedGrabbableWalls.Count > 0)
         {
-            _isGrabbingWall = true;
+            IsGrabbingWall = true;
 
             if (_limitVelocityOnWallGrabbing)
             {
@@ -414,7 +414,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            _isGrabbingWall = false;
+            IsGrabbingWall = false;
             _limitVelocityOnWallGrabbing = true;
         }
     }
@@ -461,7 +461,7 @@ public class PlayerController : MonoBehaviour
         else if ((_grabbableWallMask & 1 << otherLayer) != 0)
         {
             _touchedGrabbableWalls.Add(collision.gameObject);
-            _isGrabbingWall = true;
+            IsGrabbingWall = true;
             CreateDust();
         }
     }
@@ -476,7 +476,7 @@ public class PlayerController : MonoBehaviour
 
             if (_touchedGrabbableWalls.Count <= 0)
             {
-                _isGrabbingWall = false;
+                IsGrabbingWall = false;
             }
         }
     }

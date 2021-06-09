@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Diagnostics;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 using Debug = UnityEngine.Debug;
 
@@ -14,7 +15,9 @@ public class ScoreMng : MonoBehaviour
 
     [SerializeField] private GameObject _gameOverPanel;
     [SerializeField] private GameObject _winPanel;
-    [SerializeField] private TextMeshProUGUI _levelTimerUIObject;
+    [SerializeField] private TextMeshProUGUI _levelTimerText;
+    [SerializeField] private TextMeshProUGUI _recordTimeText;
+    [SerializeField] private TextMeshProUGUI _recordStatusText;
 
     private bool _isTimerUpdating;
 
@@ -31,21 +34,52 @@ public class ScoreMng : MonoBehaviour
     public void GameOver()
     {
         _isTimerUpdating = false;
-        _levelTimerUIObject.text = "--:--";
+        _levelTimerText.text = "--:--";
+        SetEndLevelRecordTime(false);
+
+
         StartCoroutine(SwitchPanelActiveState(_gameOverPanel, true, 1));
+        StartCoroutine(SwitchPanelActiveState(_recordStatusText.gameObject, true, 1));
+        StartCoroutine(SwitchPanelActiveState(_recordTimeText.gameObject, true, 1));
     }
 
     public void GameWin()
     {
         _isTimerUpdating = false;
-        // TODO record highscore
+        SetEndLevelRecordTime();
+
         StartCoroutine(SwitchPanelActiveState(_winPanel, true, 0.5f));
+        StartCoroutine(SwitchPanelActiveState(_recordStatusText.gameObject, true, 0.5f));
+        StartCoroutine(SwitchPanelActiveState(_recordTimeText.gameObject, true, 0.5f));
+    }
+
+    private void SetEndLevelRecordTime(bool checkForRecord = true)
+    {
+        if (checkForRecord && SetRecord())
+        {
+            _recordStatusText.text = "New Record!";
+            _recordTimeText.text = GetFormattedLevelTime();
+        }
+        else
+        {
+            _recordStatusText.text = "Current Record:";
+            var currentRecord = PlayerPrefs.GetFloat(SceneManager.GetActiveScene().name + " Highscore");
+            decimal d = (decimal)currentRecord;
+            decimal truncated = decimal.Truncate(d * 100m) / 100m;
+            _recordTimeText.text = truncated.ToString();
+        }
     }
 
     private void UpdateTimer()
     {
         if (!_isTimerUpdating) return;
-        if (LevelTimer == null) return;
+        
+        _levelTimerText.text = GetFormattedLevelTime();
+    }
+
+    private string GetFormattedLevelTime()
+    {
+        if (LevelTimer == null) return "0:00";
 
         string timerDisplayString = "<mspace=120.00>";  // Add monospacing
 
@@ -57,7 +91,7 @@ public class ScoreMng : MonoBehaviour
 
         int DoubleDigitMilliseconds = LevelTimer.Elapsed.Milliseconds / 10;
         timerDisplayString += LevelTimer.Elapsed.Seconds + ":" + DoubleDigitMilliseconds.ToString("D2") + "</mspace>";
-        _levelTimerUIObject.text = timerDisplayString;
+        return timerDisplayString;
     }
 
 
@@ -67,10 +101,21 @@ public class ScoreMng : MonoBehaviour
         panel.SetActive(state);
     }
 
-    public void SetRecord()
+    public bool SetRecord()
     {
-        // TODO: change score to lowest time
-        //var GetBest = PlayerPrefs.GetInt("HighScore");
-        //if (GetBest < myScore) PlayerPrefs.SetInt("HighScore", myScore);
+        // Check what is the highest score for this level
+        var bestLevelTime = float.MaxValue;
+        if (PlayerPrefs.HasKey(SceneManager.GetActiveScene().name + " Highscore"))
+        {
+            bestLevelTime = PlayerPrefs.GetFloat(SceneManager.GetActiveScene().name + " Highscore");
+        }
+        if (LevelTimer.Elapsed.TotalSeconds < bestLevelTime)
+        {
+            PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + " Highscore", (float)LevelTimer.Elapsed.TotalSeconds);
+            Debug.Log("New record");
+            return true;
+        }
+
+        return false;
     }
 }

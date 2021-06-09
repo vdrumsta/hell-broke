@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _dragDistanceForSwipe = 25f;
     private bool _isGrounded;
     private bool _isJumpTouch;
+    private bool _playerHasJumpedOnce;
 
     [Header("Wall Grab")]
     [SerializeField] LayerMask _grabbableWallMask;
@@ -309,6 +310,18 @@ public class PlayerController : MonoBehaviour
     private void Jump(Vector2 direction, float jumpPower)
     {
         if (!isViableJump()) return;
+
+        if (!_playerHasJumpedOnce)
+        {
+            _playerHasJumpedOnce = true;
+
+            LavaController lavaScript = FindObjectOfType<LavaController>();
+            if (lavaScript) 
+            {
+                lavaScript.StartRising();
+            }
+            _uiController.LevelTimer = Stopwatch.StartNew();
+        }
 
         _rb.AddForce(direction * jumpPower, ForceMode2D.Impulse);
 

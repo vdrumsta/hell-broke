@@ -20,7 +20,6 @@ public class LavaController : MonoBehaviour
 
     private void Start()
     {
-        _lavaWarmUpTimer = Stopwatch.StartNew();
         _mainCamera = Camera.main;
     }
 
@@ -30,6 +29,12 @@ public class LavaController : MonoBehaviour
         {
             RiseLava();
         }
+    }
+
+    public void StartRising()
+    {
+        isRising = true;
+        _lavaWarmUpTimer = Stopwatch.StartNew();
     }
 
     private bool isLavaAboveScreen()
@@ -45,7 +50,7 @@ public class LavaController : MonoBehaviour
     private void RiseLava()
     {
         float currentRiseSpeed = 0f;
-        if (_lavaWarmUpTimer.Elapsed.TotalSeconds < _warmUpTime)
+        if (_lavaWarmUpTimer != null && _lavaWarmUpTimer.Elapsed.TotalSeconds < _warmUpTime)
         {
             float percentageWarmedUp = (float) _lavaWarmUpTimer.Elapsed.TotalSeconds / _warmUpTime;
             currentRiseSpeed = _warmUpSpeedCurve.Evaluate(percentageWarmedUp) * _riseSpeed;

@@ -393,7 +393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36edaaacba436344d8e888171912b276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isRising: 1
+  isRising: 0
   _warmUpTime: 5
   _warmUpSpeedCurve:
     serializedVersion: 2

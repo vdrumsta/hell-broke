@@ -21,14 +21,14 @@ public class TutorialController : MonoBehaviour
         _playerScript = FindObjectOfType<PlayerController>();
         _lavaScript = FindObjectOfType<LavaController>();
         _timerScript = FindObjectOfType<ScoreMng>();
-        //if (PlayerPrefs.HasKey(SceneManager.GetActiveScene().name + " Tutorial"))
-        //{
-        //    _isTutorialNeeded = PlayerPrefs.GetInt(SceneManager.GetActiveScene().name + " Tutorial") == 1 ? true : false;
-        //}
-        //else
+        if (PlayerPrefs.HasKey(SceneManager.GetActiveScene().name + " Tutorial"))
+        {
+            _isTutorialNeeded = PlayerPrefs.GetInt(SceneManager.GetActiveScene().name + " Tutorial") == 1 ? true : false;
+        }
+        else
         {
             _isTutorialNeeded = true;
-            //PlayerPrefs.SetInt(SceneManager.GetActiveScene().name + " Tutorial", 1);
+            PlayerPrefs.SetInt(SceneManager.GetActiveScene().name + " Tutorial", 0);
         }
     }
 

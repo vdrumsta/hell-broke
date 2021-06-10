@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System;
+using UnityEngine.UI;
 
 public class MapMenuRecordController : MonoBehaviour
 {
@@ -12,6 +14,32 @@ public class MapMenuRecordController : MonoBehaviour
     void Start()
     {
         DisplayMapRecords();
+        DisableLockedLevels();
+    }
+
+    // Dim the image of level skulls that havent been completed (except the 1st level)
+    private void DisableLockedLevels()
+    {
+        for (int i = 1; i < _levelRecordTexts.Length; i++)
+        {
+            if (!PlayerPrefs.HasKey("Level0" + (i + 1) + " Highscore"))    // TODO: Make this work for levels greater than 9
+            {
+                if (_levelRecordTexts[i].transform.parent != null)
+                {
+                    var levelImage = _levelRecordTexts[i].transform.parent.GetComponent<Image>();
+                    if (levelImage == null) continue;
+
+                    // Dim the image
+                    var skullColor = levelImage.color;
+                    skullColor.a = 0.45f;
+                    levelImage.color = skullColor;
+
+                    // Make it non-interactable
+                    var button = levelImage.GetComponent<Button>();
+                    button.interactable = false;
+                }
+            }
+        }
     }
 
     public void ResetTutorials()

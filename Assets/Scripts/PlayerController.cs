@@ -177,7 +177,6 @@ public class PlayerController : MonoBehaviour
             Vector2 touchWorldPos = Camera.main.ScreenToWorldPoint(touch.position);
 
             _isJumpTouch = CheckIfSwipeIsJump(touch);
-            Debug.Log(_isJumpTouch);
 
             Vector2 direction = touch.position - _originalTouchScreenPos;
             direction = direction.normalized;

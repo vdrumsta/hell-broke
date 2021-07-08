@@ -177,6 +177,7 @@ public class PlayerController : MonoBehaviour
             Vector2 touchWorldPos = Camera.main.ScreenToWorldPoint(touch.position);
 
             _isJumpTouch = CheckIfSwipeIsJump(touch);
+            Debug.Log(_isJumpTouch);
 
             Vector2 direction = touch.position - _originalTouchScreenPos;
             direction = direction.normalized;
@@ -296,8 +297,9 @@ public class PlayerController : MonoBehaviour
         if (!_isJumpTouch && !_isStunned && (IsGrounded || IsGrabbingWall) && currentTouch.phase != TouchPhase.Began)
         {
             float fingerMoveDistance = Vector2.Distance(currentTouch.position, _originalTouchScreenPos);
-            
-            if (fingerMoveDistance > _dragDistanceForSwipe)
+            Vector2 originalTouchWorldPos = Camera.main.ScreenToWorldPoint(_originalTouchScreenPos);
+
+            if (fingerMoveDistance > _dragDistanceForSwipe && _playerSpriteCollider.OverlapPoint(originalTouchWorldPos))
             {
                 return true;
             }

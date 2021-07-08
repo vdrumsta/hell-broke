@@ -10534,6 +10534,7 @@ GameObject:
   - component: {fileID: 2109229761}
   - component: {fileID: 422700941}
   - component: {fileID: 783090283}
+  - component: {fileID: 872614400}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -10599,11 +10600,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4194816
   _groundedCheckHeight: 0.05
-  _dragDistanceForSwipe: 25
+  _dragDistanceForSwipe: 15
+  IsGrounded: 0
   _grabbableWallMask:
     serializedVersion: 2
     m_Bits: 6356992
-  _isGrabbingWall: 0
+  IsGrabbingWall: 0
   _trajectoryPointPrefab: {fileID: 3601170566540002804, guid: 1eea9506de59fd6429efcc448fff16ca, type: 3}
   _numberOfTrajectoryPoints: 10
   _numberOfTrajectoryFadePoints: 4
@@ -10619,7 +10621,6 @@ MonoBehaviour:
     m_Bits: 16384
   _bloodPS: {fileID: 4814032789571090926}
   _dustPS: {fileID: 1920955124}
-  _gameOverUIObject: {fileID: 0}
   _uprightTorque: 0
 --- !u!95 &730481097
 Animator:
@@ -10791,6 +10792,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.82, y: 0.91}
   m_EdgeRadius: 0
+--- !u!70 &872614400
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8062448052919946687}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: abd11761bd4734540b3a27d8cef839fb, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.86, y: 1}
+  m_Direction: 0
 --- !u!1 &8191072192617374328
 GameObject:
   m_ObjectHideFlags: 0
